@@ -1,5 +1,6 @@
 package dependency.injection.factory;
 
+import dependency.injection.model.MockSpellChecker;
 import org.junit.Test;
 
 /**
