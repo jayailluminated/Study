@@ -6,7 +6,12 @@
 
     <groupId>java-in-action</groupId>
     <artifactId>java-in-action</artifactId>
-    <version>1.0</version>
+	<packaging>pom</packaging>
+	<version>1.0</version>
+	<modules>
+		<module>spring-in-action</module>
+		<module>dependency-injection</module>
+	</modules>
 
-    
+
 </project>

@@ -5,5 +5,8 @@ package dependency.injection.factory;
  * Date: Jan 8, 2010
  * Time: 2:13:48 AM
  */
-public class MockEmailer {
+public class MockEmailer extends Emailer{
+	public boolean correctlySent() {
+		return false;  //To change body of created methods use File | Settings | File Templates.
+	}
 }

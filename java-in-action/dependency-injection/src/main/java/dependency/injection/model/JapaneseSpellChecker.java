@@ -5,5 +5,5 @@ package dependency.injection.model;
  * Date: Jan 8, 2010
  * Time: 2:01:50 AM
  */
-public class JapaneseSpellChecker {
+public class JapaneseSpellChecker extends SpellChecker{
 }

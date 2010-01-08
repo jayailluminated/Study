@@ -1,8 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>java-in-action</groupId>
+		<artifactId>java-in-action</artifactId>
+		<version>1.0</version>
+	</parent>
+
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>springstudy</groupId>
-	<artifactId>springstudy</artifactId>
+	<groupId>java-in-action</groupId>
+	<artifactId>spring-in-action</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0</version>
 	<modules>
@@ -12,6 +19,7 @@
 	</modules>
 	<name>springstudy Maven Webapp</name>
 	<url>http://maven.apache.org</url>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -19,7 +27,6 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-
 
 		<dependency>
 			<groupId>org.springframework</groupId>

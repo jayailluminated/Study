@@ -5,5 +5,5 @@ package dependency.injection.model;
  * Date: Jan 8, 2010
  * Time: 2:30:51 AM
  */
-public class SimpleFrenchTextEditor extends SimpleJapaneseTextEditor {
+public class SimpleFrenchTextEditor extends TextEditor {
 }

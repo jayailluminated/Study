@@ -1,5 +1,6 @@
 package dependency.injection.setter;
 
+import dependency.injection.model.MockSpellChecker;
 import dependency.injection.setter.Emailer;
 import org.junit.*;
 import junit.framework.JUnit4TestAdapter;

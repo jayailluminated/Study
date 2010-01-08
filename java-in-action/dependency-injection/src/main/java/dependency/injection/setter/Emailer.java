@@ -1,5 +1,7 @@
 package dependency.injection.setter;
 
+import dependency.injection.model.SpellChecker;
+
 /**
  * User: jungjooseo
  * Date: Jan 8, 2010
