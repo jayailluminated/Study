@@ -6,4 +6,7 @@ package dependency.injection.model;
  * Time: 12:41:21 AM
  */
 public abstract class SpellChecker {
+    public void check(String text) {
+        
+    }
 }

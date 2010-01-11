@@ -7,6 +7,6 @@ package dependency.injection.factory;
  */
 public class MockEmailer extends Emailer{
 	public boolean correctlySent() {
-		return false;  //To change body of created methods use File | Settings | File Templates.
+		return true;
 	}
 }

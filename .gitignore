@@ -8,8 +8,8 @@
 .DS_Store
 *.sw[po]
 tags
-target/*
-*/target
+/target
+target/
 .*/
 *.iml
 *.ipr

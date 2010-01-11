@@ -30,5 +30,10 @@ public class EmailerTest {
 	@Test
 	public void testEmailer() {
 		MockSpellChecker spellChecker = new MockSpellChecker();
+
+		//...
+		Emailer emailer = new Emailer();
+		emailer.setSpellChecker(spellChecker); //set mocked dependencies on emailer
+		emailer.send("hello there");
 	}
 }

@@ -1,0 +1,1 @@
+spring binding  by using email.xml
