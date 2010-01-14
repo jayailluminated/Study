@@ -6,12 +6,25 @@
 
     <groupId>java-in-action</groupId>
     <artifactId>java-in-action</artifactId>
-	<packaging>pom</packaging>
-	<version>1.0</version>
-	<modules>
-		<module>spring-in-action</module>
-		<module>dependency-injection</module>
-	</modules>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <modules>
+        <module>spring-in-action</module>
+        <module>dependency-injection</module>
+        <module>simple-webtest</module>
+        <module>appfuse-modular-struts</module>
+        <module>wicket-in-action</module>
+    </modules>
 
 
+    <repositories>
+        <repository>
+            <id>mvnsearch</id>
+            <url>http://www.mvnsearch.org/maven2</url>
+        </repository>
+        <repository>
+            <id>datanucleus</id>
+            <url>http://www.datanucleus.org/downloads/maven2</url>
+        </repository>
+    </repositories>
 </project>

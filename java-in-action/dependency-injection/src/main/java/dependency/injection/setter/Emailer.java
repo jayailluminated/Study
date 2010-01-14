@@ -1,6 +1,6 @@
 package dependency.injection.setter;
 
-import dependency.injection.model.SpellChecker;
+import dependency.injection.model.email.SpellChecker;
 
 /**
  * User: jungjooseo

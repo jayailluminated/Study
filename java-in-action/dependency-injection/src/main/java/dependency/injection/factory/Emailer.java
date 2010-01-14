@@ -1,10 +1,8 @@
 package dependency.injection.factory;
 
-import dependency.injection.model.EmailBook;
-import dependency.injection.model.JapaneseSpellChecker;
-import dependency.injection.model.SimpleJapaneseTextEditor;
-import dependency.injection.model.SpellChecker;
-import dependency.injection.model.TextEditor;
+import dependency.injection.model.email.EmailBook;
+import dependency.injection.model.email.SpellChecker;
+import dependency.injection.model.email.TextEditor;
 
 /**
  * User: jungjooseo
