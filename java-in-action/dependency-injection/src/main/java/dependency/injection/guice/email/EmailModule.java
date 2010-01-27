@@ -36,10 +36,10 @@ public class EmailModule extends AbstractModule {
  * Time: 1:14:43 AM
  * To change this template use File | Settings | File Templates.
  */
-public class EmailModule {
-	public static void main(String[] args) {
-		Guice.createInjector(new SpellingModule()).getInstance(Key.get(SpellChecker.class, English.class))
-				.check("Hello!");
-
-	}
-}
+//public class EmailModule {
+//	public static void main(String[] args) {
+//		Guice.createInjector(new SpellingModule()).getInstance(Key.get(SpellChecker.class, English.class))
+//				.check("Hello!");
+//
+//	}
+//}

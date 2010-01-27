@@ -1,3 +1,16 @@
+import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockPageContext;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.TagSupport;
+
+import java.io.UnsupportedEncodingException;
+
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by IntelliJ IDEA.
  * User: jungjooseo
@@ -9,7 +22,7 @@ public class CustomTagTest {
 
 
 	@Test
-	public void testCustomTag() {
+	public void testCustomTag() throws JspException {
 
 		IncludeTag tag = new IncludeTag();
 		tag.setUrl("alert");
@@ -20,7 +33,12 @@ public class CustomTagTest {
 
 		assertEquals(TagSupport.EVAL_BODY_INCLUDE, tag.doStartTag());
 		assertEquals(TagSupport.EVAL_PAGE, tag.doEndTag());
-		String output = ((MockHttpServletResponse) pageContext.getResponse()).getContentAsString();
+		String output = null;
+		try {
+			output = ((MockHttpServletResponse) pageContext.getResponse()).getContentAsString();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+		}
 		System.out.println(output);
 		assertTrue(output.contains("<span class='r'>"));
 	}

@@ -12,9 +12,33 @@
         <module>spring-in-action</module>
         <module>dependency-injection</module>
         <module>simple-webtest</module>
-        <module>appfuse-modular-struts</module>
         <module>wicket-in-action</module>
+        <module>simple-unittest</module>
     </modules>
+
+
+    <dependencies>
+        <!--  JUNIT DEPENDENCY FOR TESTING -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.7</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- LOGGING DEPENDENCIES - LOG4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+        </dependency>
+    </dependencies>
 
 
     <repositories>
