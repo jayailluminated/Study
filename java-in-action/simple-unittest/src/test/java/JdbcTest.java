@@ -9,11 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import static junit.framework.Assert.assertEquals;
+
 
 /**
  * Simple test using the WicketTester
  */
-public class TestJdbc extends TestCase {
+public class JdbcTest {
 
 	private Connection connection;
 
@@ -39,13 +41,11 @@ public class TestJdbc extends TestCase {
 			Statement stmt = connection.createStatement();
 
 			String sql = "select * from member";
-			System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			String username = null;
 			while (rs.next()) {
 				username = rs.getString("username");
-				System.out.println(username);
 				assertEquals("test", username);
 			}
 			stmt.close();

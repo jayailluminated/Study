@@ -15,25 +15,27 @@ public class DatabaseExportSample {
 	public static void main(String[] args) throws Exception {
 		// database connection
 		Class driverClass = Class.forName("org.postgresql.Driver");
-
 		Connection jdbcConnection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "postgres");
 		IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
 
+		System.setProperty("user.dir", System.getProperty("user.dir")+"/simple-unittest/src/test/resources/");
+		String outputPath = System.getProperty("user.dir");
+		System.out.println("Write File here : "+ outputPath );
+
 		// partial database export
 		QueryDataSet partialDataSet = new QueryDataSet(connection);
-//		partialDataSet.addTable("FOO", "SELECT * FROM TABLE WHERE COL='VALUE'");
 		partialDataSet.addTable("member");
-		FlatXmlDataSet.write(partialDataSet, new FileOutputStream("export.xml"));
+		FlatXmlDataSet.write(partialDataSet, new FileOutputStream(outputPath+"export.xml"));
 
 		// full database export
 		IDataSet fullDataSet = connection.createDataSet();
-		FlatXmlDataSet.write(fullDataSet, new FileOutputStream("full.xml"));
+		FlatXmlDataSet.write(fullDataSet, new FileOutputStream(outputPath+"full.xml"));
 
 		// dependent tables database export: export table X and all tables that
 		// have a PK which is a FK on X, in the right order for insertion
-//		String[] depTableNames = TablesDependencyHelper.getAllDependentTables(connection, "X");
-//		IDataSet depDataset = connection.createDataSet(depTableNames);
-//		FlatXmlDataSet.write(depDataset, new FileOutputStream("dependents.xml"));
+		String[] depTableNames = TablesDependencyHelper.getAllDependentTables(connection, "member");
+		IDataSet depDataset = connection.createDataSet(depTableNames);
+		FlatXmlDataSet.write(depDataset, new FileOutputStream(outputPath+"dependents.xml"));
 
 	}
 }
