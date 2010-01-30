@@ -1,8 +1,11 @@
+package dbunit;
+
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.database.QueryDataSet;
 import org.dbunit.database.search.TablesDependencyHelper;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.excel.XlsDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 
 import java.io.FileOutputStream;
@@ -18,24 +21,30 @@ public class DatabaseExportSample {
 		Connection jdbcConnection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "postgres");
 		IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
 
-		System.setProperty("user.dir", System.getProperty("user.dir")+"/simple-unittest/src/test/resources/");
+		System.setProperty("user.dir", System.getProperty("user.dir") + "/simple-unittest/src/test/resources/");
 		String outputPath = System.getProperty("user.dir");
-		System.out.println("Write File here : "+ outputPath );
+		System.out.println("Write File here : " + outputPath);
 
 		// partial database export
 		QueryDataSet partialDataSet = new QueryDataSet(connection);
 		partialDataSet.addTable("member");
-		FlatXmlDataSet.write(partialDataSet, new FileOutputStream(outputPath+"export.xml"));
+		FlatXmlDataSet.write(partialDataSet, new FileOutputStream(outputPath + "export.xml"));
 
 		// full database export
 		IDataSet fullDataSet = connection.createDataSet();
-		FlatXmlDataSet.write(fullDataSet, new FileOutputStream(outputPath+"full.xml"));
+		FlatXmlDataSet.write(fullDataSet, new FileOutputStream(outputPath + "full.xml"));
 
 		// dependent tables database export: export table X and all tables that
 		// have a PK which is a FK on X, in the right order for insertion
 		String[] depTableNames = TablesDependencyHelper.getAllDependentTables(connection, "member");
 		IDataSet depDataset = connection.createDataSet(depTableNames);
-		FlatXmlDataSet.write(depDataset, new FileOutputStream(outputPath+"dependents.xml"));
+		FlatXmlDataSet.write(depDataset, new FileOutputStream(outputPath + "dependents.xml"));
+
+		// export to excel
+		String[] depTableNamesForExcel = TablesDependencyHelper.getAllDependentTables(connection, "member");
+		IDataSet depDatasetForExcel = connection.createDataSet(depTableNamesForExcel);
+		XlsDataSet.write(depDatasetForExcel, new FileOutputStream(outputPath + "dependents.xls"));
+
 
 	}
 }

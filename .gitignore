@@ -9,6 +9,7 @@
 *.sw[po]
 tags
 target/
+.idea/
 .*/
 *.iml
 *.ipr

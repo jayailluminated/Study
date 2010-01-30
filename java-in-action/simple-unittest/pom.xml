@@ -40,6 +40,58 @@
 	</scm>
 	-->
 
+    <profiles>
+        <profile>
+            <id>mysql</id>
+            <properties>
+                <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
+                <jdbc.groupId>mysql</jdbc.groupId>
+                <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
+                <jdbc.version>5.0.5</jdbc.version>
+                <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
+                <jdbc.url>
+                    <![CDATA[jdbc:mysql://localhost/appfuse_modular_spring?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8]]></jdbc.url>
+                <jdbc.username>root</jdbc.username>
+                <jdbc.password></jdbc.password>
+            </properties>
+        </profile>
+    </profiles>
+
+
+    <dependencies>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.7</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>2.4.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${jdbc.groupId}</groupId>
+            <artifactId>${jdbc.artifactId}</artifactId>
+            <version>${jdbc.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.5.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.5.10</version>
+        </dependency>
+
+    </dependencies>
+
+
     <build>
         <plugins>
             <plugin>
@@ -81,38 +133,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>mysql</id>
-            <properties>
-                <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
-                <jdbc.groupId>mysql</jdbc.groupId>
-                <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-                <jdbc.version>5.0.5</jdbc.version>
-                <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-                <jdbc.url>
-                    <![CDATA[jdbc:mysql://localhost/appfuse_modular_spring?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8]]></jdbc.url>
-                <jdbc.username>root</jdbc.username>
-                <jdbc.password></jdbc.password>
-            </properties>
-        </profile>
-    </profiles>
-
-
-    <dependencies>
-        <dependency>
-            <groupId>org.dbunit</groupId>
-            <artifactId>dbunit</artifactId>
-            <version>2.4.7</version>
-        </dependency>
-        <dependency>
-            <groupId>${jdbc.groupId}</groupId>
-            <artifactId>${jdbc.artifactId}</artifactId>
-            <version>${jdbc.version}</version>
-        </dependency>
-    </dependencies>
-
 
     <properties>
         <!-- Application settings -->

@@ -1,4 +1,8 @@
-import java.io.FileOutputStream;
+package slf4j;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -11,12 +15,13 @@ import java.util.Properties;
  */
 public class GetSystemProperties {
 	public static void main(String[] args) {
+		Logger logger = LoggerFactory.getLogger(HelloLogWorld.class);
 		Properties props = System.getProperties();
 		Enumeration e = props.propertyNames();
 
 		while (e.hasMoreElements()) {
 			String key = (String) e.nextElement();
-			System.out.println(key + " : " + props.getProperty(key));
+			logger.info(key + " : " + props.getProperty(key));
 		}
 
 	}
