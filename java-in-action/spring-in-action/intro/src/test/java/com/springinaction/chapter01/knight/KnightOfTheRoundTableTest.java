@@ -1,6 +1,7 @@
 package com.springinaction.chapter01.knight;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * User: jungjooseo
@@ -8,7 +9,7 @@ import junit.framework.TestCase;
  * Time: 1:37:56 AM
  */
 public class KnightOfTheRoundTableTest extends TestCase {
-//	public void testEmbarkOnQuest() throws GrailNotFoundException {
+
 	public void testEmbarkOnQuest() throws QuestFailedException {
 		KnightOfTheRoundTable knight = new KnightOfTheRoundTable("Bedivere");
 

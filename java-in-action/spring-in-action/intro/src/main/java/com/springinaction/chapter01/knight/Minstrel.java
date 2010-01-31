@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
  * Time: 5:48:10 AM
  */
 public class Minstrel {
-	public static final Logger SONG = Logger.getLogger(Minstrel.class);
+	final Logger SONG = Logger.getLogger(Minstrel.class);
 
 	public void singBefore(Knight knight) {
 		SONG.info("Fa la la ; Sir "+ knight.getName() + "is so brave!");

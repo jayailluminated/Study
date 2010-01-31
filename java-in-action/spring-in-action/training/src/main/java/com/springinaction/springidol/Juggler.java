@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Time: 12:25:28 AM
  */
 public class Juggler implements Performer{
-	static Logger logger = LoggerFactory.getLogger(PerformerApp.class.getSimpleName());
+	final Logger logger = LoggerFactory.getLogger(PerformerApp.class.getSimpleName());
 
 	private int beanBags = 3;
 
