@@ -17,8 +17,8 @@ public class GreetingServiceImpl implements GreetingService {
 		this.greeting = greeting;
 	}
 
-	public void sayGreeting() {
-		System.out.println(greeting);
+	public String sayGreeting() {
+		return greeting;
 	}
 	public void setGreeting(String greeting) {
 		this.greeting = greeting;

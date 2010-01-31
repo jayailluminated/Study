@@ -28,7 +28,8 @@
     </category>
 
     <root>
-        <priority value="DEBUG"/>
-        <appender-ref ref="console"/>
+        <priority value="debug"/>
+        <appender-ref ref="file"/>
     </root>
+
 </log4j:configuration>

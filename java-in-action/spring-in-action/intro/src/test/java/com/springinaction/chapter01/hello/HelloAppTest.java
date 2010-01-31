@@ -16,17 +16,20 @@ import static junit.framework.Assert.assertEquals;
  * Time: 12:38:35 AM
  */
 public class HelloAppTest {
-	Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+	Logger logger = LoggerFactory.getLogger(HelloAppTest.class);
 
 	@Test
 	public void beanTest() {
 		System.setProperty("user.dir", System.getProperty("user.dir") + "/spring-in-action/intro/src/test/resource/");
 		BeanFactory factory = new XmlBeanFactory(new FileSystemResource(System.getProperty("user.dir")+"applicationContext.xml"));
 		GreetingService greetingService = (GreetingService) factory.getBean("greetingService");
-		greetingService.sayGreeting();
-		assertEquals("a", "a");
 
+		logger.debug("greeting {}", greetingService.sayGreeting());
+
+		assertEquals("Buenos Dias!", greetingService.sayGreeting());
 	}
+
+
 
 
 }

@@ -6,12 +6,7 @@ package com.springinaction.chapter01.knight;
  * Time: 4:34:43 AM
  */
 public interface Knight {
-
-
-
 	Object embarkOnQuest() throws QuestFailedException;
-
-
 	String getName();
 
 }

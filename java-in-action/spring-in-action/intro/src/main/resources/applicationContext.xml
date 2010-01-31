@@ -10,12 +10,6 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		<property name="greeting" value="Buenos Dias!"/>
 	</bean>
 
-	<!--construct-->
-	<!--<bean id="greetingService" class="com.springinaction.chapter01.hello.hello.hello.GreetingServiceImpl">-->
-	<!--<constructor-arg value="Buenos Dias!" />-->
-	<!--</bean>-->
-	<!---->
-
 	<bean id="quest" class="com.springinaction.chapter01.knight.HolyGrailQuest"/>
 
 	<bean id="knight" class="com.springinaction.chapter01.knight.KnightOfTheRoundTable">
@@ -28,7 +22,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 	<aop:config>
 		<aop:aspect ref="minstrel">
-			<aop:pointcut id="questPointcut" expression="execution(* *.embarkOnQuest(..)) ̄and target(bean)"/>
+			<aop:pointcut id="questPointcut" expression="execution(* *.embarkOnQuest(..)) and target(bean)"/>
 
 			<aop:before method="singBefore" pointcut-ref="questPointcut" arg-names="bean"/>
 			<aop:after-returning method="singAfter" pointcut-ref="questPointcut" arg-names="bean"/>

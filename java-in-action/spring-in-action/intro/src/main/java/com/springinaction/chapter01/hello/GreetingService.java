@@ -7,5 +7,5 @@ package com.springinaction.chapter01.hello;
  * To change this template use File | Settings | File Templates.
  */
 public interface GreetingService {
-	void sayGreeting();
+	String sayGreeting();
 }

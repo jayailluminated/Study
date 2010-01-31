@@ -7,13 +7,13 @@ import org.springframework.aop.MethodBeforeAdvice;
 
 
 public class MinstrelAdvice implements MethodBeforeAdvice {
-  public void before(Method method, Object[] args, Object target) 
-      throws Throwable {
+	
+	public void before(Method method, Object[] args, Object target) throws Throwable {
 
-    Knight knight = (Knight) target;
-    
-    Logger song = Logger.getLogger(target.getClass());
-    
-    song.debug("Brave " + knight.getName() + " did " + method.getName());
-  }
+		Knight knight = (Knight) target;
+
+		Logger song = Logger.getLogger(target.getClass());
+
+		song.debug("Brave " + knight.getName() + " did " + method.getName());
+	}
 }

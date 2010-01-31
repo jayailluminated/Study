@@ -1,6 +1,8 @@
 package com.springinaction.chapter01.knight;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * User: jungjooseo
@@ -8,7 +10,7 @@ import org.apache.log4j.Logger;
  * Time: 5:48:10 AM
  */
 public class Minstrel {
-	final Logger SONG = Logger.getLogger(Minstrel.class);
+	final Logger SONG = LoggerFactory.getLogger(Minstrel.class);
 
 	public void singBefore(Knight knight) {
 		SONG.info("Fa la la ; Sir "+ knight.getName() + "is so brave!");
