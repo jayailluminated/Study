@@ -19,10 +19,10 @@
 
     <!--adddtivity="false"は親の設定を継承しないという意味 defaultはtrue-->
     <!--<logger name="slf4j" additivity="false">-->
-    <logger name="slf4j" additivity="true">
+    <category name="slf4j" additivity="true">
         <level value="debug" />
         <appender-ref ref="file"/>
-    </logger>
+    </category>
 
     <root>
         <priority value="DEBUG"/>

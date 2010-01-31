@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 public class HelloLogWorld {
 
-	final	Logger logger = LoggerFactory.getLogger(HelloLogWorld.class);
+	final Logger logger = LoggerFactory.getLogger(HelloLogWorld.class);
 	Integer t;
 	Integer oldT;
 
@@ -18,7 +18,7 @@ public class HelloLogWorld {
 		logger.warn("Hello World");
 		logger.error("Hello World");
 
-		
+
 	}
 
 	public void usingSlf4jPlaceholder(Integer temperature) {

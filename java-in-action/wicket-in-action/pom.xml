@@ -11,7 +11,7 @@
     <artifactId>wicket-in-action</artifactId>
     <packaging>war</packaging>
     <!-- TODO project name  -->
-    <name>quickstart</name>
+    <name>Wicket Study Project</name>
     <description></description>
 
     <!-- TODO
@@ -30,6 +30,10 @@
     </licenses>
 
     <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
         <!--  WICKET DEPENDENCIES -->
 
         <dependency>

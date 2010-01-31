@@ -25,7 +25,7 @@ public class HelloLogWorldTest {
 	}
 
 	@Test
-	public void testusingSlf4jPlaceholder() {
+	public void testUsingSlf4jPlaceholder() {
 		clz.usingSlf4jPlaceholder(1);
 		clz.usingSlf4jPlaceholder(4);
 		clz.usingSlf4jPlaceholder(5);
