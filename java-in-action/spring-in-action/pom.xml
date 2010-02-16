@@ -16,7 +16,7 @@
         <module>training</module>
         <module>intro</module>
     </modules>
-    <name>springstudy Maven Webapp</name>
+    <name>spring-in-action</name>
     <url>http://maven.apache.org</url>
 
     <dependencies>
@@ -81,6 +81,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+	    <!-- exclude common logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
