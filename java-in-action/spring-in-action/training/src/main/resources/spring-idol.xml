@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
 
-	<bean id="duke" class="com.springinaction.springidol.Juggler" />
-  
+	<!--<bean id="duke" class="com.springinaction.springidol.Juggler">-->
+		<!--<constructor-arg value="15"/>-->
+	<!--</bean>-->
+	<bean id="duke" class="com.springinaction.springidol.PoeticJuggler">
+		<constructor-arg value="15"/>
+		<constructor-arg ref="sonnet29" />
+	</bean>
+
+	<bean id="sonnet29" class="com.springinaction.springidol.Sonnet29"/>
+
 </beans>

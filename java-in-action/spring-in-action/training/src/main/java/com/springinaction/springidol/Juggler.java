@@ -19,9 +19,9 @@ public class Juggler implements Performer{
 		this.beanBags = beanBags;
 	}
 
-	public String perform() throws PerformanceException {
+	public void perform() throws PerformanceException {
 		logger.debug("{} is name", beanBags);
-		return "JUGGLING " + beanBags + "BEANBAGS";
-		
+
+		logger.debug("JUGGLING {} BEANBAGS", beanBags);
 	}
 }

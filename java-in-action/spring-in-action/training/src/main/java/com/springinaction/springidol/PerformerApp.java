@@ -13,19 +13,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * Time: 1:03:55 AM
  */
 public class PerformerApp {
-
-
 	public static void main(String[] args) {
+
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-idol.xml");
-//		ApplicationContext ctx = new ClassPathXmlApplicationContext("com/springinaction/springidol/spring-idol.xml");
+
 		Performer performer = (Performer) ctx.getBean("duke");
 		try {
 			performer.perform();
 		} catch (PerformanceException e) {
 			e.printStackTrace();
 		}
-		String str = "JUGGLING 3BEANBAGS";
-//		System.out.println("test");
 	}
 
 
