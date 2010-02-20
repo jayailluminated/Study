@@ -1,6 +1,8 @@
 package com.springinaction.springidol;
 
 
+import com.springinaction.springidol.performer.PerformanceException;
+import com.springinaction.springidol.performer.Performer;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +22,9 @@ public class PerformerTest {
 	@Test
 	public void beanTest() throws PerformanceException {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-idol.xml");
-//		ApplicationContext ctx = new ClassPathXmlApplicationContext("com/springinaction/springidol/spring-idol.xml");
 		Performer performer = (Performer) ctx.getBean("duke");
 		performer.perform();
-		String str = "JUGGLING 3BEANBAGS";
+		String str = "JUGGLING 3 BEANBAGS";
 		logger.debug("{} is name",str);
 		
 	}

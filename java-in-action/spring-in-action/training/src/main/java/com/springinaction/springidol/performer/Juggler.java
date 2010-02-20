@@ -1,5 +1,8 @@
-package com.springinaction.springidol;
+package com.springinaction.springidol.performer;
 
+import com.springinaction.springidol.performer.PerformanceException;
+import com.springinaction.springidol.PerformerApp;
+import com.springinaction.springidol.performer.Performer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Date: Jan 6, 2010
  * Time: 12:25:28 AM
  */
-public class Juggler implements Performer{
+public class Juggler implements Performer {
 	final Logger logger = LoggerFactory.getLogger(PerformerApp.class.getSimpleName());
 
 	private int beanBags = 3;

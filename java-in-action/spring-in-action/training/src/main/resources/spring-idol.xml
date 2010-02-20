@@ -6,14 +6,88 @@
     http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
 
-	<!--<bean id="duke" class="com.springinaction.springidol.Juggler">-->
-		<!--<constructor-arg value="15"/>-->
-	<!--</bean>-->
-	<bean id="duke" class="com.springinaction.springidol.PoeticJuggler">
+	<bean id="dukeOriginal" class="com.springinaction.springidol.performer.Juggler">
 		<constructor-arg value="15"/>
-		<constructor-arg ref="sonnet29" />
+	</bean>
+
+	<bean id="duke" class="com.springinaction.springidol.performer.PoeticJuggler">
+		<constructor-arg value="15"/>
+		<constructor-arg ref="sonnet29"/>
 	</bean>
 
 	<bean id="sonnet29" class="com.springinaction.springidol.Sonnet29"/>
 
+	<bean id="kenny" class="com.springinaction.springidol.performer.Instrumentalist">
+		<property name="song" value="Jingle Bells"/>
+		<property name="age" value="37"/>
+		<!-- when you setting object you must write "ref"-->
+		<!--<property name="instrument" ref="saxophone"/>-->
+		<property name="instrument" ref="piano"/>
+	</bean>
+
+
+	<!--Inner bean setting -->
+	<bean id="innerBean" class="com.springinaction.springidol.performer.Instrumentalist">
+		<property name="song" value="Inner Bean"/>
+		<property name="instrument">
+			<bean class="com.springinaction.springidol.instrument.Saxophone"/>
+		</property>
+	</bean>
+
+
+	<!--Wiring collection -->
+	<bean id="hankList" class="com.springinaction.springidol.performer.OneManBand">
+		<property name="instruments">
+			<list>
+				<ref bean="guitar"/>
+				<ref bean="cymbal"/>
+				<ref bean="harmonica"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="hankSet" class="com.springinaction.springidol.performer.OneManBand">
+		<property name="instruments">
+			<set>
+				<ref bean="guitar"/>                               
+				<ref bean="cymbal"/>
+				<ref bean="harmonica"/>
+				<!--this harmonica ignored-->
+				<ref bean="harmonica"/>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="hankSetMap" class="com.springinaction.springidol.performer.OneManBandMap">
+		<property name="instruments">
+			<map>
+				<entry key="GUITAR" value-ref="guitar"/>
+				<entry key="CYMBAL" value-ref="cymbal"/>
+				<entry key="HAMONICA" value-ref="harmonica"/>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="hankSetMapProperties" class="com.springinaction.springidol.performer.OneManBandProperties">
+		<property name="instruments">
+			<props>
+				<prop key="GUITAR">STRUM STRUM STRUM</prop>
+				<prop key="CYMBAL">CRASH CRASH CRASH</prop>
+				<prop key="HAMONICA">HUM HUM HUM</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<!-- Instrument -->
+	<bean id="saxophone" class="com.springinaction.springidol.instrument.Saxophone"/>
+	<bean id="piano" class="com.springinaction.springidol.instrument.Piano"/>
+	<bean id="guitar" class="com.springinaction.springidol.instrument.Guitar"/>
+	<bean id="cymbal" class="com.springinaction.springidol.instrument.Cymbal"/>
+	<bean id="harmonica" class="com.springinaction.springidol.instrument.Harmonica"/>
+
+	<!-- autowired-->
+	<bean id="instrument" class="com.springinaction.springidol.instrument.Saxophone"/>
+	<bean id="kennyWired" class="com.springinaction.springidol.performer.Instrumentalist" autowire="byName">
+		<property name="song" value="autowired song" />
+	</bean>
 </beans>
