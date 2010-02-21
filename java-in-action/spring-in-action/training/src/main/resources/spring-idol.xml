@@ -48,7 +48,7 @@
 	<bean id="hankSet" class="com.springinaction.springidol.performer.OneManBand">
 		<property name="instruments">
 			<set>
-				<ref bean="guitar"/>                               
+				<ref bean="guitar"/>
 				<ref bean="cymbal"/>
 				<ref bean="harmonica"/>
 				<!--this harmonica ignored-->
@@ -79,15 +79,35 @@
 
 
 	<!-- Instrument -->
-	<bean id="saxophone" class="com.springinaction.springidol.instrument.Saxophone"/>
+	<!--saxophone can keep hygiene-->
+	<bean id="saxophone" class="com.springinaction.springidol.instrument.Saxophone" scope="prototype"/>
 	<bean id="piano" class="com.springinaction.springidol.instrument.Piano"/>
 	<bean id="guitar" class="com.springinaction.springidol.instrument.Guitar"/>
 	<bean id="cymbal" class="com.springinaction.springidol.instrument.Cymbal"/>
 	<bean id="harmonica" class="com.springinaction.springidol.instrument.Harmonica"/>
 
-	<!-- autowired-->
+	<!--
+	    autowiring byName
+	-->
 	<bean id="instrument" class="com.springinaction.springidol.instrument.Saxophone"/>
-	<bean id="kennyWired" class="com.springinaction.springidol.performer.Instrumentalist" autowire="byName">
-		<property name="song" value="autowired song" />
+	<bean id="kennyWiredByName" class="com.springinaction.springidol.performer.Instrumentalist" autowire="byName">
+		<property name="song" value="autowired song"/>
 	</bean>
+	<!--
+	    autowiring byType
+	    The below setting will accur Exception
+	    because Spring find more than one bean whose type is assignable to the autowird propety
+	-->
+	<!--<bean id="kennyWiredByType" class="com.springinaction.springidol.performer.Instrumentalist" autowire="byType">-->
+	<!--<property name="song" value="autowired song" />-->
+	<!--</bean>-->
+	<!--
+	    autowiring by constructor
+	    autowiring by constructor share the same limitation byType
+	-->
+	<bean id="dukeConstructWired" class="com.springinaction.springidol.performer.PoeticJuggler" autowire="constructor"/>
+
+	<!--private constructor and singleton -->
+	<bean id="theStage" class="com.springinaction.springidol.Stage" factory-method="getInstance" />
+
 </beans>
