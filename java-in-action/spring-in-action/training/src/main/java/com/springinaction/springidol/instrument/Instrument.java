@@ -9,4 +9,8 @@ package com.springinaction.springidol.instrument;
  */
 public interface Instrument {
 	void play ();
+
+	void tune ();
+
+	void clean ();
 }

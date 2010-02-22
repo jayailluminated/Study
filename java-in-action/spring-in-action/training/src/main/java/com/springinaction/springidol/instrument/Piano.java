@@ -23,4 +23,14 @@ public class Piano implements Instrument {
 	public void play () {
 		logger.info("PIANO");
 	}
+
+	@Override
+	public void tune () {
+		logger.info("Piano tune");
+	}
+
+	@Override
+	public void clean () {
+		logger.info("Piano clean");
+	}
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+	<!--<bean id="kenny" class="com.springinaction.springidol.performer.Instrumentalist">-->
+	<!--<property name="song" value="Jingle Bells"/>-->
+	<!--<property name="instrument" ref="saxophone"/>-->
+	<!--</bean>-->
+	<!--<bean id="david" class="com.springinaction.springidol.performer.Instrumentalist">-->
+	<!--<property name="song" value="Jingle Bells"/>-->
+	<!--<property name="instrument" ref="saxophone"/>-->
+	<!--</bean>-->
+	<bean id="kenny" parent="baseSaxophonist"/>
+	<bean id="david" parent="baseSaxophonist"/>
+	<bean id="frank" parent="baseSaxophonist">
+		<property name="song" value="Mary had a little lamb"/>
+	</bean>
+	<!-- abstract bean  :  this can't be instantiated by spring container -->
+	<bean id="baseSaxophonist" class="com.springinaction.springidol.performer.Instrumentalist" abstract="true">
+		<property name="instrument" ref="saxophone"/>
+		<property name="song" value="Jingle Bells"/>
+	</bean>
+
+	<!--<bean id="taylor" class="com.springinaction.springidol.performer.Vocalist">-->
+		<!--<property name="song" value="Somewhere Over the Rainbow"/>-->
+	<!--</bean>-->
+	<!--<bean id="stevie" class="com.springinaction.springidol.performer.Instrumentalist>-->
+		<!--<property name="instrument" ref="guitar"/>-->
+		<!--<property name="song" value="Somewhere Over the Rainbow"/>-->
+	<!--</bean>-->
+	<bean id="taylor" class="com.springinaction.springidol.performer.Vocalist" parent="basePerformer"/>
+	<bean id="stevie" class="com.springinaction.springidol.performer.Instrumentalist" parent="basePerformer"/>
+	<!-- the doesn't have a class attribute set, But That's okay, because each child bean will determine its own type-->
+	<bean id="basePerformer" abstract="true">
+		<property name="song" value="Somewhere Over the Rainbow"/>
+	</bean>
+
+	<!-- Instrument -->
+	<!--saxophone can keep hygiene-->
+	<bean id="saxophone" class="com.springinaction.springidol.instrument.Saxophone" scope="prototype"/>
+	<bean id="piano" class="com.springinaction.springidol.instrument.Piano"/>
+	<bean id="guitar" class="com.springinaction.springidol.instrument.Guitar"/>
+	<bean id="cymbal" class="com.springinaction.springidol.instrument.Cymbal"/>
+	<bean id="harmonica" class="com.springinaction.springidol.instrument.Harmonica"/>
+
+
+</beans>

@@ -23,4 +23,14 @@ public class Saxophone implements Instrument {
 	public void play () {
 		logger.info("TOOT TOOT TOOT");
 	}
+
+	@Override
+	public void tune () {
+		logger.info("Saxophone tune");
+	}
+
+	@Override
+	public void clean () {
+		logger.info("Saxophone clean");
+	}
 }

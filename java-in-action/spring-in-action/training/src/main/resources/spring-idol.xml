@@ -110,4 +110,10 @@
 	<!--private constructor and singleton -->
 	<bean id="theStage" class="com.springinaction.springidol.Stage" factory-method="getInstance" />
 
+	<!--Initializing and destroying beans-->
+	<bean id="kennyInitDestroy" class="com.springinaction.springidol.performer.Instrumentalist" init-method="tuneInstrument" destroy-method="cleanInstrument">
+		<property name="song" value="Initializing and Destroy"/>
+		<property name="instrument" value="saxophone"/>
+	</bean>
+
 </beans>

@@ -20,4 +20,14 @@ public class Harmonica implements Instrument{
 	public void play () {
 		logger.info("play Harmonica");
 	}
+
+	@Override
+	public void tune () {
+		logger.info("Harmonica turn");
+	}
+
+	@Override
+	public void clean () {
+		logger.info("Harmonica clean");
+	}
 }

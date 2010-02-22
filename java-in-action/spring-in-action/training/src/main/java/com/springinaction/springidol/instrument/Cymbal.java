@@ -20,4 +20,14 @@ public class Cymbal implements Instrument{
 	public void play () {
 		logger.info("play Cymbal");
 	}
+
+	@Override
+	public void tune () {
+		logger.info("Cymbal tune");
+	}
+
+	@Override
+	public void clean () {
+		logger.info("Cymbal clean");
+	}
 }

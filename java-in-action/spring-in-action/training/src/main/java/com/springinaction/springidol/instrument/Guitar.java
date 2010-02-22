@@ -20,4 +20,14 @@ public class Guitar implements Instrument{
 	public void play () {
 		logger.info("play Guitar ");
 	}
+
+	@Override
+	public void tune () {
+		logger.info("Guitar tune");
+	}
+
+	@Override
+	public void clean () {
+		logger.info("Guitar clean");
+	}
 }
