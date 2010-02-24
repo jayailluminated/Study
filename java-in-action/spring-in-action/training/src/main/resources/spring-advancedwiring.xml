@@ -26,14 +26,16 @@
 	</bean>
 
 	<!--<bean id="taylor" class="com.springinaction.springidol.performer.Vocalist">-->
-		<!--<property name="song" value="Somewhere Over the Rainbow"/>-->
+	<!--<property name="song" value="Somewhere Over the Rainbow"/>-->
 	<!--</bean>-->
 	<!--<bean id="stevie" class="com.springinaction.springidol.performer.Instrumentalist>-->
-		<!--<property name="instrument" ref="guitar"/>-->
-		<!--<property name="song" value="Somewhere Over the Rainbow"/>-->
+	<!--<property name="instrument" ref="guitar"/>-->
+	<!--<property name="song" value="Somewhere Over the Rainbow"/>-->
 	<!--</bean>-->
 	<bean id="taylor" class="com.springinaction.springidol.performer.Vocalist" parent="basePerformer"/>
-	<bean id="stevie" class="com.springinaction.springidol.performer.Instrumentalist" parent="basePerformer"/>
+	<bean id="stevie" class="com.springinaction.springidol.performer.Instrumentalist" parent="basePerformer">
+		<property name="instrument" ref="guitar"/>
+	</bean>
 	<!-- the doesn't have a class attribute set, But That's okay, because each child bean will determine its own type-->
 	<bean id="basePerformer" abstract="true">
 		<property name="song" value="Somewhere Over the Rainbow"/>
@@ -46,6 +48,23 @@
 	<bean id="guitar" class="com.springinaction.springidol.instrument.Guitar"/>
 	<bean id="cymbal" class="com.springinaction.springidol.instrument.Cymbal"/>
 	<bean id="harmonica" class="com.springinaction.springidol.instrument.Harmonica"/>
+
+	<bean id="harry" class="com.springinaction.springidol.performer.Magician">
+		<property name="magicBox" ref="magicBox"/>
+		<property name="magicWords" value="Bippity boppity boo"/>
+	</bean>
+
+	<bean id="magicBox" class="com.springinaction.springidol.performer.MagicBoxImpl">
+		<replaced-method name="getContents" replacer="tigerReplacer"/>
+	</bean>
+
+	<bean id="tigerReplacer" class="com.springinaction.springidol.performer.TigerReplacer"/>
+	
+	<!-- lookup method : getter injection-->
+	<bean id="stevieGetterInjection" class="com.springinaction.springidol.performer.InstrumentalistGetterInjection">
+		<lookup-method name="getInstrument" bean="guitar"/>
+		<property name="song" value="Greensleeves" />
+	</bean>
 
 
 </beans>
