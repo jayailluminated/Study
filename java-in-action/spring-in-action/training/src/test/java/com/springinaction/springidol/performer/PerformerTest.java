@@ -1,4 +1,4 @@
-package com.springinaction.springidol;
+package com.springinaction.springidol.performer;
 
 
 import com.springinaction.springidol.performer.PerformanceException;
@@ -25,7 +25,7 @@ public class PerformerTest {
 		Performer performer = (Performer) ctx.getBean("duke");
 		performer.perform();
 		String str = "JUGGLING 3 BEANBAGS";
-		logger.debug("{} is name",str);
+		logger.info("{} is name",str);
 		
 	}
 

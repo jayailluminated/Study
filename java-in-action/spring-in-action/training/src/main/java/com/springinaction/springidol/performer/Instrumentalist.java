@@ -14,7 +14,7 @@ import org.springframework.beans.factory.InitializingBean;
  * To change this template use File | Settings | File Templates.
  */
 public class Instrumentalist implements Performer, InitializingBean, DisposableBean {
-	Logger logger = LoggerFactory.getLogger(Instrumentalist.class.getSimpleName());
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private String age;
 	private Instrument instrument;

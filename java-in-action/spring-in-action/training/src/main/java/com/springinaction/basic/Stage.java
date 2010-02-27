@@ -1,4 +1,4 @@
-package com.springinaction.springidol;
+package com.springinaction.basic;
 
 /**
  * Created by IntelliJ IDEA.

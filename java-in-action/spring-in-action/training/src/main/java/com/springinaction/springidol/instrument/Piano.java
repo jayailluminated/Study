@@ -15,12 +15,23 @@ import org.slf4j.LoggerFactory;
 public class Piano implements Instrument {
 	Logger logger = LoggerFactory.getLogger(Saxophone.class.getSimpleName());
 
+	public String getSong () {
+		return song;
+	}
+
+	public void setSong (String song) {
+		this.song = song;
+	}
+
+	private String song;
+
 	public Piano () {
 	}
 
 
 	@Override
 	public void play () {
+		setSong("PIANO");
 		logger.info("PIANO");
 	}
 

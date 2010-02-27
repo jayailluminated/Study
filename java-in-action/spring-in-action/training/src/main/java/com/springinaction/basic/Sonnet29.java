@@ -1,4 +1,4 @@
-package com.springinaction.springidol;
+package com.springinaction.basic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

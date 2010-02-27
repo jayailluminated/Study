@@ -1,5 +1,6 @@
-package com.springinaction.springidol;
+package com.springinaction.basic;
 
+import com.springinaction.basic.Stage;
 import com.springinaction.springidol.performer.PerformanceException;
 import org.junit.Test;
 import org.slf4j.Logger;

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+	<bean id="infoPhone" class="com.springinaction.propeditor.PhoneNumber">
+		<constructor-arg value="888"/>
+		<constructor-arg value="555"/>
+		<constructor-arg value="1212"/>
+	</bean>
+	<bean id="contact" class="com.springinaction.propeditor.Contact">
+		<property name="phoneNumber" ref="infoPhone"/>
+	</bean>
+
+
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="com.springinaction.propeditor.PhoneNumber">
+					<bean id="phoneEditor" class="com.springinaction.propeditor.PhoneEditor"/>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="contactProp" class="com.springinaction.propeditor.Contact">
+		<property name="phoneNumber" value="888-555-1212"/>
+	</bean>
+
+
+	<bean class="com.springinaction.postprocessor.Fuddifier"/>
+
+	<bean id="bugs" class="com.springinaction.postprocessor.Rabbit">
+		<property name="description" value="That rascally rabbit!"/>
+	</bean>
+</beans>

@@ -1,7 +1,7 @@
 package com.springinaction.springidol.performer;
 
+import com.springinaction.basic.PerformerApp;
 import com.springinaction.springidol.performer.PerformanceException;
-import com.springinaction.springidol.PerformerApp;
 import com.springinaction.springidol.performer.Performer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

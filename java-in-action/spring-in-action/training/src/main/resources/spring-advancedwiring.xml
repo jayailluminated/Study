@@ -2,8 +2,11 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
 
 
 	<!--<bean id="kenny" class="com.springinaction.springidol.performer.Instrumentalist">-->
@@ -59,12 +62,28 @@
 	</bean>
 
 	<bean id="tigerReplacer" class="com.springinaction.springidol.performer.TigerReplacer"/>
-	
+
 	<!-- lookup method : getter injection-->
 	<bean id="stevieGetterInjection" class="com.springinaction.springidol.performer.InstrumentalistGetterInjection">
 		<lookup-method name="getInstrument" bean="guitar"/>
-		<property name="song" value="Greensleeves" />
+		<property name="song" value="Greensleeves"/>
 	</bean>
+
+	<!--
+	   injecting non Spring beans
+	   abtract="true" <<- bean shouldn't be instantiated - it will be created outside of Spring
+	   With this blueprint defined, we need annotation @Configurable
+	   <aop:spring-configured/> - Spring know to configure bean with annotation
+	-->
+	<bean id="pianist" class="com.springinaction.springidol.performer.InstrumentalistConfigurable" abstract="true">
+		<property name="song" value="Chopsticks"/>
+		<property name="instrument">
+			<bean class="com.springinaction.springidol.instrument.Piano"/>
+		</property>
+	</bean>
+
+	<!-- Enable @Configured support -->
+	<aop:spring-configured/>
 
 
 </beans>
