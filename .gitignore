@@ -5,6 +5,7 @@
 *.rej
 .*~
 *~
+#*#
 .DS_Store
 *.sw[po]
 tags
