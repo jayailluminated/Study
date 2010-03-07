@@ -36,4 +36,38 @@
 	<bean id="bugs" class="com.springinaction.postprocessor.Rabbit">
 		<property name="description" value="That rascally rabbit!"/>
 	</bean>
+
+	<bean id="beanCounter" class="com.springinaction.postprocessor.BeanCounter"/>
+
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="url" value="jdbc:hsqldb:Training"/>
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+		<property name="username" value="appUser"/>
+		<property name="password" value="password"/>
+	</bean>
+
+	<!---->
+	<!--Externalizing configuration properties-->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="jdbc.properties"/>
+	</bean>
+
+	<!-- configuration into multiple prorperty -->
+	<bean id="propertyConfigurers" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>jdbc.properties</value>
+				<value>security.properties</value>
+				<value>application.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSourcePluggingInThePlaceholder" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="url" value="${database.url}"/>
+		<property name="driverClassName" value="${database.driver}"/>
+		<property name="username" value="${database.user}"/>
+		<property name="password" value="${database.password}"/>
+	</bean>
 </beans>

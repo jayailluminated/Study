@@ -9,15 +9,8 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<name>spring-in-action-training</name>
-	<artifactId>training</artifactId>
+	<name>spring-in-action-aop</name>
+	<artifactId>aop</artifactId>
 
-	<dependencies>
-		<dependency>
-		    <groupId>groovy</groupId>
-		    <artifactId>groovy</artifactId>
-		    <version>1.0</version>
-		</dependency>
-	</dependencies>
 
 </project>

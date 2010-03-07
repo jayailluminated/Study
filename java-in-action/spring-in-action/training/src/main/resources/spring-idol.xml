@@ -91,7 +91,7 @@
 	-->
 	<bean id="instrument" class="com.springinaction.springidol.instrument.Saxophone"/>
 	<bean id="kennyWiredByName" class="com.springinaction.springidol.performer.Instrumentalist" autowire="byName">
-		<property name="song" value="autowired song"/>
+		<property name="song" value="will play saxophone song"/>
 	</bean>
 	<!--
 	    autowiring byType
