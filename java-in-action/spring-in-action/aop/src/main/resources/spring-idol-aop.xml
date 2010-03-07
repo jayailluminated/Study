@@ -30,12 +30,12 @@
 	<!--Normar Regexp Pointcut-->
 	<bean id="audienceAdvisorRegexp" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
 		<property name="advice" ref="audienceAdvice"/>
-		<property name="pointcut" ref=".*Pointcut"/>
+		<property name="pattern" value=".*perform"/>
 	</bean>
 
 	<!--AspectJ Pointcut-->
 	<bean id="performancePointcutAspectJ" class="org.springframework.aop.aspectj.AspectJExpressionPointcut">
-		<property name="expression" ref="execution(* Performer+.perform(..))"/>
+		<property name="expression" value="execution(* Performer+.perform(..))"/>
 	</bean>
 
 	<bean id="audienceAdvisorAspectJ" class="org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor">
@@ -43,21 +43,22 @@
 		<property name="expression" value="execution(* *.perform(..))"/>
 	</bean>
 
+
 	<bean id="duke" class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="target" ref="dukeTarget"/>
-		<property name="interceptorName" value="audienceAdvisor"/>
+		<property name="interceptorNames" value="audienceAdvisor"/>
 		<property name="proxyInterfaces" value="com.springinaction.springidol.performer.Performer"/>
 	</bean>
 
 	<bean id="dukeTarget" class="com.springinaction.springidol.performer.PoeticJuggler">
 		<constructor-arg ref="sonnet29"/>
 	</bean>
-	<bean id="sonnet29" class="com.springinaction.basic.Sonnet29"/>
+	<bean id="sonnet29" class="com.springinaction.springidol.performer.Sonnet29"/>
 
 
 	<bean id="stevie" class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="target" ref="stevieTarget"/>
-		<property name="interceptorName" value="audienceAdvisor"/>
+		<property name="interceptorNames" value="audienceAdvisor"/>
 		<property name="proxyInterfaces" value="com.springinaction.springidol.performer.Performer"/>
 	</bean>
 	<bean id="stevieTarget" class="com.springinaction.springidol.performer.Magician">
@@ -71,7 +72,7 @@
 	    Using abstract beans to define a parent for all of your advised beans is a great way to cut down on the amount of XML 
 	-->
 	<bean id="audienceProxyBase" class="org.springframework.aop.framework.ProxyFactoryBean" abstract="true">
-		<property name="interceptorName" value="audienceAdvisor"/>
+		<property name="interceptorNames" value="audienceAdvisor"/>
 		<property name="proxyInterfaces" value="com.springinaction.springidol.performer.Performer"/>
 	</bean>
 
