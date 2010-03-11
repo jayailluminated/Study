@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+
+	<!--DRY : eliminate redundant pointcut SPRING AOP  -->
+	<bean id="audience" class="com.springinaction.springidol.audience.Audience"/>
+	<aop:config>
+		<aop:pointcut id="performance" expression="execution(* *.perform(..))"/>
+
+		<aop:aspect ref="audience">
+			<aop:around method="aroundAdvice" pointcut-ref="performance"/>
+			<aop:before method="takeSeats" pointcut-ref="performance"/>
+			<aop:before method="turnOffCellPhones" pointcut-ref="performance"/>
+			<aop:after-returning method="applaud" pointcut-ref="performance"/>
+			<aop:after-throwing method="demandRefund" pointcut-ref="performance"/>
+		</aop:aspect>
+	</aop:config>
+
+
+	<!-- SPRING AOP-->
+	<bean id="paula" class="com.springinaction.springidol.performer.NiceJudge"/>
+	<aop:config>
+		<aop:aspect ref="paula">
+			<aop:before pointcut="execution(* *.perform(..))" method="greetPerformer"/>
+			<aop:after-returning pointcut="execution(* *.perform(..))" method="saySomethingNice"/>
+			<aop:after-throwing pointcut="execution(* *.perform(..))" method="saySomethingNiceAnyway"/>
+		</aop:aspect>
+	</aop:config>
+
+</beans>
