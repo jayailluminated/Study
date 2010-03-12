@@ -73,7 +73,7 @@
 	   injecting non Spring beans
 	   abtract="true" <<- bean shouldn't be instantiated - it will be created outside of Spring
 	   With this blueprint defined, we need annotation @Configurable
-	   <aop:spring-configured/> - Spring know to configure bean with annotation
+	   <aspectj:spring-configured/> - Spring know to configure bean with annotation
 	-->
 	<bean id="pianist" class="com.springinaction.springidol.performer.InstrumentalistConfigurable" abstract="true">
 		<property name="song" value="Chopsticks"/>

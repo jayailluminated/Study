@@ -20,7 +20,7 @@ public class KnightOfTheRoundTable implements Knight{
 
 //	public HolyGrail embarkOnQuest() throws GrailNotFoundException {
 	public Object embarkOnQuest() throws QuestFailedException {
-//aop?????????????????
+//aspectj?????????????????
 //		minstrel.singBefore(this);
 //		HolyGrail grail = (HolyGrail) quest.embark();
 //		minstrel.singAfter(this);

@@ -12,5 +12,24 @@
 	<name>spring-in-action-aop</name>
 	<artifactId>aop</artifactId>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>1.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<!-- use this goal to weave all your main classes -->
+							<goal>compile</goal>
+							<!-- use this goal to weave all your test classes -->
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

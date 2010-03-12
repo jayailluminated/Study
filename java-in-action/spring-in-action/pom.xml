@@ -113,6 +113,7 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -164,6 +165,9 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
+					<!--<fork>true</fork>-->
+					<!--<executable>${java.home}/../bin/javac</executable>-->
+					<!--<compilerArgument>-proc:none</compilerArgument>-->
 				</configuration>
 			</plugin>
 
