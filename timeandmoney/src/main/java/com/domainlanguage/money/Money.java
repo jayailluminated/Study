@@ -9,9 +9,11 @@ package com.domainlanguage.money;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Currency;
 import java.util.Iterator;
+import java.util.Locale;
 
 import com.domainlanguage.base.Ratio;
 import com.domainlanguage.time.Duration;
@@ -303,6 +305,27 @@ public class Money implements Comparable, Serializable {
 		return currency.getCurrencyCode() + " " + amount;
 	}
 
+
+	public String toStringWithSymbol() {
+		if(currency.equals(USD)) {
+			NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
+			return nf.format(amount);
+		} else if (currency.equals(JPY)) {
+			NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.JAPAN);
+			return nf.format(amount);
+		} else if (currency.equals(KRW)) {
+			NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.KOREA);
+			return nf.format(amount);
+		} else if (currency.equals(EUR)) {
+			NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.UK);
+			return nf.format(amount);
+		}
+
+		return currency.getSymbol() + amount;
+
+	}
+
+
 	public MoneyTimeRate per(Duration duration) {
 		return new MoneyTimeRate(this, duration);
 	}
@@ -363,6 +386,7 @@ public class Money implements Comparable, Serializable {
 	private void setForPersistentMapping_Currency(Currency currency) {
 		this.currency = currency;
 	}
+
 
 
 

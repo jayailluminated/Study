@@ -208,7 +208,10 @@ public class MoneyTest {
 
 	@Test
 	public void testToStringWithSymbol() {
-
+		assertEquals("$15.00", d15.toStringWithSymbol());
+		assertEquals("£2.51", e2_51.toStringWithSymbol());
+		assertEquals("￥50", y50.toStringWithSymbol());
+		assertEquals("￦50", k50.toStringWithSymbol());
 	}
 
 	@Test
