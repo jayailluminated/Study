@@ -15,7 +15,7 @@ public class MoneyTimeRateTest extends TestCase {
     public void testSimpleRate() {
         MoneyTimeRate rate = new MoneyTimeRate(Money.dollars(20.00), Duration.hours(1));
         assertEquals(Money.dollars(40.00), rate.over(Duration.hours(2)));
-    }    
+    }
     public void testRounding(){
         MoneyTimeRate rate = new MoneyTimeRate(Money.dollars(100.00), Duration.minutes(3));
         try {
@@ -25,12 +25,12 @@ public class MoneyTimeRateTest extends TestCase {
     }
     public void testRoundingRate() {
         MoneyTimeRate rate = new MoneyTimeRate(Money.euros(100.00), Duration.minutes(3));
-        assertEquals(Money.euros(new BigDecimal("33.33")), rate.over(Duration.minutes(1), BigDecimal.ROUND_DOWN));
+        assertEquals(Money.euros(new BigDecimal("33.33")), rate.over(Duration.minutes(1), RoundingMode.DOWN));
     }
 
     public void testRoundingScalingRate() {
         MoneyTimeRate rate = new MoneyTimeRate(Money.euros(new BigDecimal("100.00")), Duration.minutes(3));
-        assertEquals(Money.euros(new BigDecimal("33.33")), rate.over(Duration.minutes(1), 2, BigDecimal.ROUND_DOWN));
+        assertEquals(Money.euros(new BigDecimal("33.33")), rate.over(Duration.minutes(1), 2, RoundingMode.DOWN));
     }
     public void testEquals() {
         Money amount=Money.euros(11.00);

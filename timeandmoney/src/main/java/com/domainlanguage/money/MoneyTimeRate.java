@@ -5,8 +5,9 @@
  */
 package com.domainlanguage.money;
 
-import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Currency;
+
 import com.domainlanguage.time.Duration;
 import com.domainlanguage.time.TimeRate;
 
@@ -20,14 +21,14 @@ public class MoneyTimeRate {
 	}
 
 	public Money over(Duration duration) {
-		return over(duration, BigDecimal.ROUND_UNNECESSARY);
+		return over(duration, RoundingMode.UNNECESSARY);
 	}
 
-	public Money over(Duration duration, int roundRule) {
+	public Money over(Duration duration, RoundingMode roundRule) {
 		return over(duration, rate.scale(), roundRule);
 	}
 
-	public Money over(Duration duration, int scale, int roundRule) {
+	public Money over(Duration duration, int scale, RoundingMode roundRule) {
 		return Money.valueOf(rate.over(duration, scale, roundRule), currency);
 	}
 
@@ -39,9 +40,9 @@ public class MoneyTimeRate {
         }
     }
 	public boolean equals(MoneyTimeRate another) {
-		return 
+		return
             another != null &&
-			this.rate.equals(another.rate) && 
+			this.rate.equals(another.rate) &&
 			this.currency.equals(another.currency);
 	}
 

@@ -2,7 +2,7 @@
  * Copyright (c) 2004 Domain Language, Inc. (http://domainlanguage.com) This
  * free software is distributed under the "MIT" licence. See file licence.txt.
  * For more information, see http://timeandmoney.sourceforge.net.
- * 
+ *
  * Ratio represents the unitless division of two quantities of the same type.
  * The key to its usefulness is that it defers the calculation of a decimal
  * value for the ratio. An object which has responsibility for the two values in
@@ -12,12 +12,13 @@
  * gives control of the precision and rounding rules to the client, when the
  * time comes to compute a decimal value for the ratio. The client typically has
  * the responsibilities that enable an appropriate choice of these parameters.
- *  
+ *
  */
 
 package com.domainlanguage.base;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Ratio {
     private BigDecimal numerator;
@@ -39,7 +40,7 @@ public class Ratio {
         this.denominator = denominator;
     }
 
-    public BigDecimal decimalValue(int scale, int roundingRule) {
+    public BigDecimal decimalValue(int scale, RoundingMode roundingRule) {
         return numerator.divide(denominator, scale, roundingRule);
     }
 
@@ -51,7 +52,7 @@ public class Ratio {
         }
     }
     public boolean equals(Ratio other) {
-        return 
+        return
         	other != null &&
         	this.numerator.equals(other.numerator) && this.denominator.equals(other.denominator);
     }
@@ -71,7 +72,7 @@ public class Ratio {
     public String toString() {
         return numerator.toString() + "/" + denominator;
     }
-    
+
     //Only for use by persistence mapping frameworks
     //<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
     Ratio() {

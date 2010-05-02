@@ -6,6 +6,7 @@
 package com.domainlanguage.time;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class TimeRate {
 	private BigDecimal quantity;
@@ -25,14 +26,14 @@ public class TimeRate {
 	}
 
 	public BigDecimal over(Duration duration) {
-		return over(duration, BigDecimal.ROUND_UNNECESSARY);
+		return over(duration, RoundingMode.UNNECESSARY);
 	}
 
-	public BigDecimal over(Duration duration, int roundRule) {
+	public BigDecimal over(Duration duration, RoundingMode roundRule) {
 		return over(duration, scale(), roundRule);
 	}
 
-	public BigDecimal over(Duration duration, int scale, int roundRule) {
+	public BigDecimal over(Duration duration, int scale, RoundingMode roundRule) {
 		return duration.dividedBy(unit).times(quantity).decimalValue(scale, roundRule);
 	}
 
@@ -44,7 +45,7 @@ public class TimeRate {
         }
 	}
     public boolean equals(TimeRate another) {
-    	return 
+    	return
     		another != null &&
     		quantity.equals(another.quantity) && unit.equals(another.unit);
     }

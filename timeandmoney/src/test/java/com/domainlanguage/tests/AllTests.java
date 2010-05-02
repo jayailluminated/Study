@@ -6,34 +6,19 @@
 
 package com.domainlanguage.tests;
 
-import java.util.*;
+import java.io.File;
 
-import junit.framework.*;
-import junit.textui.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import junitx.util.DirectorySuiteBuilder;
+import junitx.util.SimpleTestFilter;
 
-public class AllTests extends TestSuite {
 
-    public static TestSuite suite() {
-        TestSuite suite = new TestSuite();
-        String[] exludedPackages = new String[] {
-        // "???.", //note: add a package name to exclude it
-        };
-        TestSuite[] exludedSuites = new TestSuite[] {
-        // ???.suite(), //note: add a suite name to exclude it
-        };
-        FilteredTestCaseCollector collector = new FilteredTestCaseCollector();
-        collector.exludedPackages(exludedPackages);
-        collector.exludedSuites(exludedSuites);
-        Enumeration enumeration = collector.collectTests();
-        while (enumeration.hasMoreElements())
-            try {
-                String each = (String) enumeration.nextElement();
-                suite.addTestSuite(Class.forName(each));
-            } catch (ClassNotFoundException ignore) {
-            }
-        return suite;
-    }
-    public static void main(String[] args) {
-        TestRunner.run(suite());
-    }
+
+public class AllTests extends TestSuite{
+	public static Test suite() throws Exception {
+		DirectorySuiteBuilder builder = new DirectorySuiteBuilder(new SimpleTestFilter());
+		return builder.suite(new File("target/test-classes"));
+	}
+
 }

@@ -11,7 +11,7 @@ import junit.framework.*;
 
 
 public class TimeRateTest extends TestCase {
-	
+
 	public void testSimpleRate() {
 		TimeRate rate = new TimeRate(100.00, Duration.minutes(1));
 		assertEquals(new BigDecimal(6000.00), rate.over(Duration.hours(1)));
@@ -28,13 +28,13 @@ public class TimeRateTest extends TestCase {
 
 	public void testRoundingRate() {
 		TimeRate rate = new TimeRate("100.00", Duration.minutes(3));
-		assertEquals(new BigDecimal("33.33"), rate.over(Duration.minutes(1), BigDecimal.ROUND_DOWN));
+		assertEquals(new BigDecimal("33.33"), rate.over(Duration.minutes(1), RoundingMode.DOWN));
 	}
-	
+
 //	TODO: failing test
 	public void xtestRoundingScalingRate() {
 		TimeRate rate = new TimeRate("100.00", Duration.minutes(3));
-		assertEquals(new BigDecimal("33.33"), rate.over(Duration.minutes(1), 3, BigDecimal.ROUND_DOWN));
+		assertEquals(new BigDecimal("33.33"), rate.over(Duration.minutes(1), 3, RoundingMode.DOWN));
 	}
 
 	public void testEquals() {
