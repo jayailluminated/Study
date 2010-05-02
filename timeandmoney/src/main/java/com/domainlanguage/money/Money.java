@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.Locale;
 
 import com.domainlanguage.base.Ratio;
+import com.domainlanguage.base.TextFormatFactory;
 import com.domainlanguage.time.Duration;
 
 public class Money implements Comparable, Serializable {
@@ -307,22 +308,11 @@ public class Money implements Comparable, Serializable {
 
 
 	public String toStringWithSymbol() {
-		if(currency.equals(USD)) {
-			NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
-			return nf.format(amount);
-		} else if (currency.equals(JPY)) {
-			NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.JAPAN);
-			return nf.format(amount);
-		} else if (currency.equals(KRW)) {
-			NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.KOREA);
-			return nf.format(amount);
-		} else if (currency.equals(EUR)) {
-			NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.UK);
+		NumberFormat nf = TextFormatFactory.getCurrencyFormat(currency);
+		if(nf != null) {
 			return nf.format(amount);
 		}
-
 		return currency.getSymbol() + amount;
-
 	}
 
 

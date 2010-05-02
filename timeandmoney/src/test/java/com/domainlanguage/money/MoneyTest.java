@@ -13,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.domainlanguage.base.Ratio;
-import com.domainlanguage.base.Rounding;
 import com.domainlanguage.tests.SerializationTester;
 
 public class MoneyTest {

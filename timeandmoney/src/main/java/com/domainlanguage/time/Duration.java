@@ -6,17 +6,24 @@
 
 package com.domainlanguage.time;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Locale;
 
-import com.domainlanguage.base.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.domainlanguage.base.Ratio;
+import com.domainlanguage.base.TextFormatFactory;
 
 public class Duration implements Comparable, Serializable {
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	public static final Duration NONE = milliseconds(0);
 
 	private long quantity;
 	private TimeUnit unit;
-	
+
 	public static Duration milliseconds(long howMany) {
 		return Duration.of(howMany, TimeUnit.millisecond);
 	}
@@ -24,19 +31,19 @@ public class Duration implements Comparable, Serializable {
 	public static Duration seconds(int howMany) {
 		return Duration.of(howMany, TimeUnit.second);
 	}
-	
+
 	public static Duration minutes(int howMany) {
 		return Duration.of(howMany, TimeUnit.minute);
 	}
-	
+
 	public static Duration hours(int howMany) {
 		return Duration.of(howMany, TimeUnit.hour);
 	}
-	
+
 	public static Duration days(int howMany) {
 		return Duration.of(howMany, TimeUnit.day);
 	}
-	
+
 	public static Duration daysHoursMinutesSecondsMilliseconds(int days, int hours, int minutes, int seconds, long milliseconds) {
 		Duration result = Duration.days(days);
 		if (hours != 0) result = result.plus(Duration.hours(hours));
@@ -45,23 +52,23 @@ public class Duration implements Comparable, Serializable {
 		if (milliseconds != 0) result = result.plus(Duration.milliseconds(milliseconds));
 		return result;
 	}
-	
+
 	public static Duration weeks(int howMany) {
 		return Duration.of(howMany, TimeUnit.week);
 	}
-	
+
 	public static Duration months(int howMany) {
 		return Duration.of(howMany, TimeUnit.month);
 	}
-	
+
 	public static Duration quarters(int howMany) {
 		return Duration.of(howMany, TimeUnit.quarter);
 	}
-	
+
 	public static Duration years(int howMany) {
 		return Duration.of(howMany, TimeUnit.year);
 	}
-	
+
 	private static Duration of(long howMany, TimeUnit unit) {
 		return new Duration(howMany, unit);
 	}
@@ -71,7 +78,7 @@ public class Duration implements Comparable, Serializable {
 		this.quantity = quantity;
 		this.unit = unit;
 	}
-    
+
 	long inBaseUnits() {
 		return quantity * unit.getFactor();
 	}
@@ -83,18 +90,18 @@ public class Duration implements Comparable, Serializable {
 	}
 
 	public Duration minus(Duration other) {
-        assertNotConvertible(other);
+		assertNotConvertible(other);
 		assert this.compareTo(other) >= 0;
 		long newQuantity = this.inBaseUnits() - other.inBaseUnits();
 		return new Duration(newQuantity, unit.baseUnit());
 	}
 
-    
-	
+
+
 	public TimePoint addedTo(TimePoint point) {
-        return addAmountToTimePoint(inBaseUnits(), point);
+		return addAmountToTimePoint(inBaseUnits(), point);
 	}
-	
+
 	public TimePoint subtractedFrom(TimePoint point) {
 		return addAmountToTimePoint(-1 * inBaseUnits(), point);
 	}
@@ -103,10 +110,10 @@ public class Duration implements Comparable, Serializable {
 //		only valid for days and larger units
 		if (unit.compareTo(TimeUnit.day) < 0) return day;
 		Calendar calendar = day.asJavaCalendarUniversalZoneMidnight();
-		if (unit.equals(TimeUnit.day)) 
+		if (unit.equals(TimeUnit.day))
 			calendar.add(Calendar.DATE, (int) quantity);
-		else 
-            addAmountToCalendar(inBaseUnits(), calendar);
+		else
+			addAmountToCalendar(inBaseUnits(), calendar);
 		return CalendarDate._from(calendar);
 	}
 
@@ -114,10 +121,10 @@ public class Duration implements Comparable, Serializable {
 //		only valid for days and larger units
 		if (unit.compareTo(TimeUnit.day) < 0) return day;
 		Calendar calendar = day.asJavaCalendarUniversalZoneMidnight();
-		if (unit.equals(TimeUnit.day)) 
+		if (unit.equals(TimeUnit.day))
 			calendar.add(Calendar.DATE, -1 * (int)quantity);
-		else 
-            subtractAmountFromCalendar(inBaseUnits(), calendar);
+		else
+			subtractAmountFromCalendar(inBaseUnits(), calendar);
 		return CalendarDate._from(calendar);
 	}
 
@@ -140,7 +147,28 @@ public class Duration implements Comparable, Serializable {
 	public String toNormalizedString() {
 		return toNormalizedString(unit.descendingUnits());
 	}
-	
+
+	public String toLocalizedString(Locale locale) {
+		TimeUnit[] units = unit.descendingUnitsForDisplay();
+		long remainder = inBaseUnits();
+		String[] formats = TextFormatFactory.getRemainTimeFormat(locale);
+		StringBuffer formatStr = new StringBuffer();
+		Object[] args = new Object[units.length];
+		int argsCnt = 0;
+		for (int i = 0; i < units.length; i++) {
+			TimeUnit aUnit = units[i];
+			long portion = remainder / aUnit.getFactor();
+			if (portion > 0) {
+				if(argsCnt != 0)
+					formatStr.append(" ");
+				formatStr.append(formats[i]);
+				args[argsCnt++] = portion;
+			}
+			remainder = remainder % aUnit.getFactor();
+		}
+		return String.format(formatStr.toString(), args);
+	}
+
 	public TimeUnit normalizedUnit() {
 		TimeUnit[] units = unit.descendingUnits();
 		long baseAmount = inBaseUnits();
@@ -150,9 +178,9 @@ public class Duration implements Comparable, Serializable {
 			if (remainder == 0) return aUnit;
 		}
 		return null;
-		
+
 	}
-	
+
 	public int hashCode() {
 		return (int) quantity;
 	}
@@ -165,11 +193,11 @@ public class Duration implements Comparable, Serializable {
 		if (difference < 0) return -1;
 		return 0;
 	}
-	
+
 	public TimeInterval startingFrom(TimePoint start) {
 		return TimeInterval.startingFrom(start, this);
 	}
-	
+
 	public CalendarInterval startingFrom(CalendarDate start) {
 		return CalendarInterval.startingFrom(start, this);
 	}
@@ -177,79 +205,81 @@ public class Duration implements Comparable, Serializable {
 	public TimeInterval preceding(TimePoint end) {
 		return TimeInterval.preceding(end, this);
 	}
-    TimePoint addAmountToTimePoint(long amount, TimePoint point) {
-        if (unit.isConvertibleToMilliseconds()) {
-            return TimePoint.from(amount + point.millisecondsFromEpoc);
-        } else {
-            Calendar calendar = point.asJavaCalendar();
-            addAmountToCalendar(amount, calendar);
-            return TimePoint.from(calendar);
-        }
-    }
-    void addAmountToCalendar(long amount, Calendar calendar) {
-        if (unit.isConvertibleToMilliseconds()) {
-            calendar.setTimeInMillis(calendar.getTimeInMillis() + amount);
-        } else {
-            assert (amount >= Integer.MIN_VALUE && amount <= Integer.MAX_VALUE);
-            calendar.add(unit.javaCalendarConstantForBaseType(), (int) amount);
-        }
-    }
-    void subtractAmountFromCalendar(long amount, Calendar calendar) {
-        addAmountToCalendar(-1 * amount, calendar);
-    }
-    
-    private void assertNotConvertible(Duration other) {
-        if (!other.unit.isConvertibleTo(this.unit))
-            throw new IllegalArgumentException(other.toString() + " is not convertible to: " + this.toString());
-    }
-    private void assertQuantityPositiveOrZero(long quantity) {
-        if (quantity < 0)
-            throw new IllegalArgumentException("Quantity: "+quantity+" must be zero or positive");
-    }
-    private boolean isConvertibleTo(Duration other) {
-        return this.unit.isConvertibleTo(other.unit);
-    }
-    private String toNormalizedString(TimeUnit[] units) {
-        StringBuffer buffer = new StringBuffer();
-        long remainder = inBaseUnits();
-        boolean first = true;       
-        for (int i = 0; i < units.length; i++) {
-            TimeUnit aUnit = units[i];
-            long portion = remainder / aUnit.getFactor();           
-            if (portion > 0) {
-                if (!first)
-                    buffer.append(", ");
-                else
-                    first = false;
-                buffer.append(aUnit.toString(portion));
-            }
-            remainder = remainder % aUnit.getFactor();
-        }
-        return buffer.toString();
-    }
+	TimePoint addAmountToTimePoint(long amount, TimePoint point) {
+		if (unit.isConvertibleToMilliseconds()) {
+			return TimePoint.from(amount + point.millisecondsFromEpoc);
+		} else {
+			Calendar calendar = point.asJavaCalendar();
+			addAmountToCalendar(amount, calendar);
+			return TimePoint.from(calendar);
+		}
+	}
+	void addAmountToCalendar(long amount, Calendar calendar) {
+		if (unit.isConvertibleToMilliseconds()) {
+			calendar.setTimeInMillis(calendar.getTimeInMillis() + amount);
+		} else {
+			assert (amount >= Integer.MIN_VALUE && amount <= Integer.MAX_VALUE);
+			calendar.add(unit.javaCalendarConstantForBaseType(), (int) amount);
+		}
+	}
+	void subtractAmountFromCalendar(long amount, Calendar calendar) {
+		addAmountToCalendar(-1 * amount, calendar);
+	}
 
-    //Only for use by persistence mapping frameworks
-    //<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-    Duration() {
-    }
-    //Only for use by persistence mapping frameworks
-    //<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-    private long getForPersistentMapping_Quantity() {
-        return quantity;
-    }
-    //Only for use by persistence mapping frameworks
-    //<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-    private void setForPersistentMapping_Quantity(long quantity) {
-        this.quantity = quantity;
-    }
-    //Only for use by persistence mapping frameworks
-    //<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-    private TimeUnit getForPersistentMapping_Unit() {
-        return unit;
-    }
-    //Only for use by persistence mapping frameworks
-    //<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-    private void setForPersistentMapping_Unit(TimeUnit unit) {
-        this.unit = unit;
-    }
+	private void assertNotConvertible(Duration other) {
+		if (!other.unit.isConvertibleTo(this.unit))
+			throw new IllegalArgumentException(other.toString() + " is not convertible to: " + this.toString());
+	}
+	private void assertQuantityPositiveOrZero(long quantity) {
+		if (quantity < 0)
+			throw new IllegalArgumentException("Quantity: "+quantity+" must be zero or positive");
+	}
+	private boolean isConvertibleTo(Duration other) {
+		return this.unit.isConvertibleTo(other.unit);
+	}
+	private String toNormalizedString(TimeUnit[] units) {
+		StringBuffer buffer = new StringBuffer();
+		long remainder = inBaseUnits();
+		boolean first = true;
+		for (int i = 0; i < units.length; i++) {
+			TimeUnit aUnit = units[i];
+			long portion = remainder / aUnit.getFactor();
+			if (portion > 0) {
+				if (!first)
+					buffer.append(", ");
+				else
+					first = false;
+				buffer.append(aUnit.toString(portion));
+			}
+			remainder = remainder % aUnit.getFactor();
+		}
+		return buffer.toString();
+	}
+
+	//Only for use by persistence mapping frameworks
+	//<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	Duration() {
+	}
+	//Only for use by persistence mapping frameworks
+	//<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	private long getForPersistentMapping_Quantity() {
+		return quantity;
+	}
+	//Only for use by persistence mapping frameworks
+	//<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	private void setForPersistentMapping_Quantity(long quantity) {
+		this.quantity = quantity;
+	}
+	//Only for use by persistence mapping frameworks
+	//<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	private TimeUnit getForPersistentMapping_Unit() {
+		return unit;
+	}
+	//Only for use by persistence mapping frameworks
+	//<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	private void setForPersistentMapping_Unit(TimeUnit unit) {
+		this.unit = unit;
+	}
+
+
 }

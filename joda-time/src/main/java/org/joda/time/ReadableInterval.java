@@ -15,7 +15,7 @@
  */
 package org.joda.time;
 
-/** 
+/**
  * Readable interface for an interval of time between two instants.
  * <p>
  * A time interval represents a period of time between two instants.
@@ -64,7 +64,7 @@ public interface ReadableInterval {
      */
     DateTime getStart();
 
-    /** 
+    /**
      * Gets the end of this time interval which is exclusive.
      *
      * @return the end of the time interval,
@@ -72,7 +72,7 @@ public interface ReadableInterval {
      */
     long getEndMillis();
 
-    /** 
+    /**
      * Gets the end of this time interval, which is exclusive, as a DateTime.
      *
      * @return the end of the time interval
@@ -93,7 +93,7 @@ public interface ReadableInterval {
      * [09:00 to 10:00) contains 09:59  = true
      * [09:00 to 10:00) contains 10:00  = false (equals end)
      * [09:00 to 10:00) contains 10:01  = false (after end)
-     * 
+     *
      * [14:00 to 14:00) contains 14:00  = false (zero duration contains nothing)
      * </pre>
      *
@@ -101,7 +101,7 @@ public interface ReadableInterval {
      * @return true if this time interval contains the instant
      */
     boolean contains(ReadableInstant instant);
-    
+
     /**
      * Does this time interval contain the specified time interval.
      * <p>
@@ -123,11 +123,11 @@ public interface ReadableInterval {
      * [09:00 to 10:00) contains [09:30 to 10:00)  = true
      * [09:00 to 10:00) contains [09:15 to 09:45)  = true
      * [09:00 to 10:00) contains [09:00 to 09:00)  = true
-     * 
+     *
      * [09:00 to 10:00) contains [08:59 to 10:00)  = false (otherStart before thisStart)
      * [09:00 to 10:00) contains [09:00 to 10:01)  = false (otherEnd after thisEnd)
      * [09:00 to 10:00) contains [10:00 to 10:00)  = false (otherStart equals thisEnd)
-     * 
+     *
      * [14:00 to 14:00) contains [14:00 to 14:00)  = false (zero duration contains nothing)
      * </pre>
      *
@@ -135,13 +135,13 @@ public interface ReadableInterval {
      * @return true if this time interval contains the time interval
      */
     boolean contains(ReadableInterval interval);
-    
+
     /**
      * Does this time interval overlap the specified time interval.
      * <p>
      * Intervals are inclusive of the start instant and exclusive of the end.
      * An interval overlaps another if it shares some common part of the
-     * datetime continuum. 
+     * datetime continuum.
      * <p>
      * When two intervals are compared the result is one of three states:
      * (a) they abut, (b) there is a gap between them, (c) they overlap.
@@ -155,21 +155,21 @@ public interface ReadableInterval {
      * [09:00 to 10:00) overlaps [08:00 to 09:30)  = true
      * [09:00 to 10:00) overlaps [08:00 to 10:00)  = true
      * [09:00 to 10:00) overlaps [08:00 to 11:00)  = true
-     * 
+     *
      * [09:00 to 10:00) overlaps [09:00 to 09:00)  = false (abuts before)
      * [09:00 to 10:00) overlaps [09:00 to 09:30)  = true
      * [09:00 to 10:00) overlaps [09:00 to 10:00)  = true
      * [09:00 to 10:00) overlaps [09:00 to 11:00)  = true
-     * 
+     *
      * [09:00 to 10:00) overlaps [09:30 to 09:30)  = true
      * [09:00 to 10:00) overlaps [09:30 to 10:00)  = true
      * [09:00 to 10:00) overlaps [09:30 to 11:00)  = true
-     * 
+     *
      * [09:00 to 10:00) overlaps [10:00 to 10:00)  = false (abuts after)
      * [09:00 to 10:00) overlaps [10:00 to 11:00)  = false (abuts after)
-     * 
+     *
      * [09:00 to 10:00) overlaps [10:30 to 11:00)  = false (completely after)
-     * 
+     *
      * [14:00 to 14:00) overlaps [14:00 to 14:00)  = false (abuts before and after)
      * [14:00 to 14:00) overlaps [13:00 to 15:00)  = true
      * </pre>
@@ -178,48 +178,48 @@ public interface ReadableInterval {
      * @return true if the time intervals overlap
      */
     boolean overlaps(ReadableInterval interval);
-    
+
     //-----------------------------------------------------------------------
     /**
      * Is this time interval after the specified instant.
      * <p>
      * Intervals are inclusive of the start instant and exclusive of the end.
-     * 
+     *
      * @param instant  the instant to compare to, null means now
      * @return true if this time interval is after the instant
      */
     boolean isAfter(ReadableInstant instant);
-    
+
     /**
      * Is this time interval entirely after the specified interval.
      * <p>
      * Intervals are inclusive of the start instant and exclusive of the end.
-     * 
+     *
      * @param interval  the interval to compare to, null means now
      * @return true if this time interval is after the interval specified
      */
     boolean isAfter(ReadableInterval interval);
-    
+
     /**
      * Is this time interval before the specified instant.
      * <p>
      * Intervals are inclusive of the start instant and exclusive of the end.
-     * 
+     *
      * @param instant  the instant to compare to, null means now
      * @return true if this time interval is before the instant
      */
     boolean isBefore(ReadableInstant instant);
-    
+
     /**
      * Is this time interval entirely before the specified interval.
      * <p>
      * Intervals are inclusive of the start instant and exclusive of the end.
-     * 
+     *
      * @param interval  the interval to compare to, null means now
      * @return true if this time interval is before the interval specified
      */
     boolean isBefore(ReadableInterval interval);
-    
+
     //-----------------------------------------------------------------------
     /**
      * Get this interval as an immutable <code>Interval</code> object.
@@ -294,7 +294,7 @@ public interface ReadableInterval {
     boolean equals(Object readableInterval);
 
     /**
-     * Gets a hash code for the time interval that is compatable with the 
+     * Gets a hash code for the time interval that is compatable with the
      * equals method.
      * <p>
      * The formula used must be as follows:
