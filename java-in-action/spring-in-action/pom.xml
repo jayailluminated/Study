@@ -17,6 +17,7 @@
 		<module>intro</module>
 		<module>aop</module>
 		<module>data-access</module>
+		<module>quartz</module>
 	</modules>
 	<name>spring-in-action</name>
 	<url>http://maven.apache.org</url>

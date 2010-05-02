@@ -73,6 +73,12 @@
 			<version>${jetty.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- WICKET -->
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-auth-roles</artifactId>
+			<version>${wicket.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<resources>

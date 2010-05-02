@@ -42,7 +42,7 @@ public class SimpleJdbcTemplateTest {
 
 		rantDao.saveMotorist(motorist);
 
-		Motorist motorist2 = rantDao.getMotoristById(1);
+		Motorist motorist2 = rantDao.getMotoristById(1L);
 
 		assertEquals(motorist, motorist2);
 

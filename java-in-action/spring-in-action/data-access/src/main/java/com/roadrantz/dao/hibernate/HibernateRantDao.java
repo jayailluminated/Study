@@ -68,9 +68,24 @@ public class HibernateRantDao extends HibernateDaoSupport implements RantDao {
 	}
 
 	public List<Rant> getRantsForDay (Date day) {
-		return getHibernateTemplate().find(
-				"from " + RANT + " where postedDate = ?", day);
+		return getHibernateTemplate().find("from " + RANT + " where postedDate = ?", day);
 	}
+
+
+	//getRantsForDay() using cache :
+	// if you use  ?Spring Modules Cache.?
+	// Your code will not change
+
+	//public List<Rant> getRantsForDay(Date day) {
+	//	List<Rant> cacheResult = rantCache.lookup("getRantsForDay", day);
+	//	if(cachedResult != null) {
+	//		return cacheResult;
+	//	}
+	//	cacheResult = getHibernateTemplate().find("fron "+ RANT + " where postedDate = ?", day);
+	//	rantCache.store("getRantsForDay", day, cachedResult);
+	//	return cacheResult;
+	//}
+
 
 	public void saveMotorist (Motorist driver) {
 		getHibernateTemplate().saveOrUpdate(driver);

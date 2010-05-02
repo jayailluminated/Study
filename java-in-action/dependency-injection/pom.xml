@@ -45,10 +45,4 @@
     </dependencies>
 
 
-    <properties>
-        <guice.version>2.0</guice.version>
-        <spring.version>2.5.6</spring.version>
-    </properties>
-
-
 </project>
