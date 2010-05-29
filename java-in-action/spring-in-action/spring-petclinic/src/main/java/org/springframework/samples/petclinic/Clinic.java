@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic;
 import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * The high-level PetClinic business interface.
@@ -72,6 +73,7 @@ public interface Clinic {
 	 * @param visit the <code>Visit</code> to save
 	 * @see BaseEntity#isNew
 	 */
+	@PreAuthorize("hasRole('ROLE_SUPERVISOR')")
 	void storeVisit(Visit visit) throws DataAccessException;
 
 	/**
