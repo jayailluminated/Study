@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	
+	<bean id="testClass" class="com.apress.prospring2.ch12.quartz.spring.BeanInjected">
+		<property name="message" value="test msg"/>
+	</bean>
+	
+	<bean id="job" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.apress.prospring2.ch12.quartz.spring.ContextJob" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="message" value="Original Message" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="applicationContextSchedulerContextKey">
+			<value>applicationContext</value>
+		</property>
+	</bean>
+
+
+</beans>
