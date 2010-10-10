@@ -1,87 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>java-in-action</groupId>
 	<artifactId>java-in-action</artifactId>
-	<packaging>pom</packaging>
+	<groupId>java-in-action</groupId>
 	<version>1.0</version>
+	<packaging>pom</packaging>
 	<modules>
-		<module>spring-in-action</module>
-		<module>dependency-injection</module>
-		<module>simple-webtest</module>
-		<module>wicket-in-action</module>
-		<module>simple-unittest</module>
+		<module>junit-in-action</module>
 		<module>simple-selenium</module>
+		<module>simple-unittest</module>
+		<module>simple-webtest</module>
+		<module>struts2-in-action</module>
+		<module>wicket-in-action</module>
 		<module>wicket-test</module>
-		<module>spring-in-action</module>
-		<module>spring-in-action</module>
+		<module>dependency-injection</module>
+		<module>junit-in-action</module>
+		<module>spring3-toby</module>
+
 	</modules>
-
-
-	<repositories>
-		<repository>
-			<id>mvnsearch</id>
-			<url>http://www.mvnsearch.org/maven2</url>
-		</repository>                                                                       
-		<repository>
-			<id>datanucleus</id>
-			<url>http://www.datanucleus.org/downloads/maven2</url>
-		</repository>
-	</repositories>
-
+	
+	
 	<dependencyManagement>
 		<dependencies>
-			<!-- * TESTING LIBRARY * -->
 			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${junit.version}</version>
-			</dependency>
-
-			<!-- * LOGGING LIBRARY * -->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<!-- concrete Common Logging Implementation for SLF4J API-->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-jcl</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<!-- concrete Log4J Implementation for SLF4J API-->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<!-- exclude Common Logging -->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>jcl-over-slf4j</artifactId>
-				<version>${slf4j.version}</version>
-			</dependency>
-			<!-- logger -->
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>${log4j.version}</version>
-			</dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+		</dependency>
 		</dependencies>
-
 	</dependencyManagement>
-
-	<properties>
-		<junit.version>4.7</junit.version>
-		<guice.version>2.0</guice.version>
-		<spring.version>2.5.6</spring.version>
-		<slf4j.version>1.5.6</slf4j.version>
-		<log4j.version>1.2.14</log4j.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>		
-	</properties>
-
+	
 </project>

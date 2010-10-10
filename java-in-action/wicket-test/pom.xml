@@ -41,9 +41,10 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.4.2</version>
 		</dependency>
-		<dependency>
+	    <dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
 		</dependency>
 
 		<!--  JUNIT DEPENDENCY FOR TESTING -->
@@ -79,6 +80,7 @@
 			<artifactId>wicket-auth-roles</artifactId>
 			<version>${wicket.version}</version>
 		</dependency>
+
 	</dependencies>
 	<build>
 		<resources>
@@ -114,6 +116,7 @@
 			</testResource>
 		</testResources>
 		<plugins>
+			<!--
 			<plugin>
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -125,6 +128,7 @@
 					<debug>true</debug>
 				</configuration>
 			</plugin>
+			-->
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>

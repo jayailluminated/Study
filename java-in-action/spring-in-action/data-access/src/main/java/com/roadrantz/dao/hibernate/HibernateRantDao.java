@@ -1,14 +1,13 @@
 package com.roadrantz.dao.hibernate;
 
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-
 import com.roadrantz.dao.RantDao;
 import com.roadrantz.domain.Motorist;
 import com.roadrantz.domain.Rant;
 import com.roadrantz.domain.Vehicle;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Hibernate-based implementation of the RantDao interface.
@@ -98,5 +97,10 @@ public class HibernateRantDao extends HibernateDaoSupport implements RantDao {
 	public int getMotoristCount () {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public Motorist getMotoristById (long l) {
+		return null;  //To change body of implemented methods use File | Settings | File Templates.
 	}
 }
