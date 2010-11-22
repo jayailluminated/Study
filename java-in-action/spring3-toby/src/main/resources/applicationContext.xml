@@ -4,14 +4,14 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 	<bean id="connectionMaker" class="springbook.user.connection.DConnectionMaker" />
-	
+
 	<bean id="userDaoUsingConnectionMaker" class="springbook.user.dao.UserDaoUsingConnectionMaker">
 		<property name="connectionMaker" ref="connectionMaker" />
 	</bean>
-	
+
 	<!-- ↑ old setting -->
 	<!-- ↓ new setting -->
-	
+
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 		<property name="driverClass" value="org.postgresql.Driver" />
@@ -19,16 +19,20 @@
 		<property name="username" value="postgres" />
 		<property name="password" value="postgres" />
 	</bean>
-	
+
 	<bean id="userDao" class="springbook.user.dao.UserDao">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
-	
+
+	<bean id="userDaoSpring" class="springbook.spring3.user.dao.UserDao">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
 	<!--
 	<bean id="jdbcContext" class="springbook.user.dao.JdbcContext">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	-->
-	
+
 </beans>

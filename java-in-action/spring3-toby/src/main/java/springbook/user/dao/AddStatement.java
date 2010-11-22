@@ -21,7 +21,7 @@ public class AddStatement implements StatementStrategy {
 		ps.setString(3, user.getPassword());
 		return ps;
 	}
-	
+
 
 
 }
