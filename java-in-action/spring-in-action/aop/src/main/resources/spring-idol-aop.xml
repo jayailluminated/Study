@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+	<bean id="audience" class="com.springinaction.springidol.audience.Audience"/>
+
+	<bean id="audienceAdvice" class="com.springinaction.springidol.audience.AudienceAdvice">
+		<property name="audience" ref="audience"/>
+	</bean>
+
+	<bean id="audienceAroundAdvice" class="com.springinaction.springidol.audience.AudienceAroundAdvice">
+		<property name="audience" ref="audience"/>
+	</bean>
+
+
+	<!--Default Pointcut-->
+	<bean id="performancePointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+		<property name="pattern" value=".*perform"/>
+	</bean>
+	<bean id="audienceAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="audienceAdvice"/>
+		<property name="pointcut" ref="performancePointcut"/>
+	</bean>
+	<!--Default Pointcut end -->
+
+	<!--Normar Regexp Pointcut-->
+	<bean id="audienceAdvisorRegexp" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<property name="advice" ref="audienceAdvice"/>
+		<property name="pattern" value=".*perform"/>
+	</bean>
+
+	<!--AspectJ Pointcut-->
+	<bean id="performancePointcutAspectJ" class="org.springframework.aop.aspectj.AspectJExpressionPointcut">
+		<property name="expression" value="execution(* Performer+.perform(..))"/>
+	</bean>
+
+	<bean id="audienceAdvisorAspectJ" class="org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor">
+		<property name="advice" ref="audienceAdvice"/>
+		<property name="expression" value="execution(* *.perform(..))"/>
+	</bean>
+
+
+	<bean id="duke" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="dukeTarget"/>
+		<property name="interceptorNames" value="audienceAdvisor"/>
+		<property name="proxyInterfaces" value="com.springinaction.springidol.performer.Performer"/>
+	</bean>
+
+	<bean id="dukeTarget" class="com.springinaction.springidol.performer.PoeticJuggler">
+		<constructor-arg ref="sonnet29"/>
+	</bean>
+	<bean id="sonnet29" class="com.springinaction.springidol.performer.Sonnet29"/>
+
+
+	<bean id="stevie" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="stevieTarget"/>
+		<property name="interceptorNames" value="audienceAdvisor"/>
+		<property name="proxyInterfaces" value="com.springinaction.springidol.performer.Performer"/>
+	</bean>
+	<bean id="stevieTarget" class="com.springinaction.springidol.performer.Magician">
+		<property name="magicBox" ref="magicBox"/>
+		<property name="magicWords" value="Bippity boppity boo"/>
+	</bean>
+	<bean id="magicBox" class="com.springinaction.springidol.performer.MagicBoxImpl"/>
+
+	<!--
+	    ProxyFacotryBean extends
+	    Using abstract beans to define a parent for all of your advised beans is a great way to cut down on the amount of XML 
+	-->
+	<bean id="audienceProxyBase" class="org.springframework.aop.framework.ProxyFactoryBean" abstract="true">
+		<property name="interceptorNames" value="audienceAdvisor"/>
+		<property name="proxyInterfaces" value="com.springinaction.springidol.performer.Performer"/>
+	</bean>
+
+	<bean id="duke2" parent="audienceProxyBase">
+		<property name="target" ref="dukeTarget"/>
+	</bean>
+
+	<bean id="stevie2" parent="audienceProxyBase">
+		<property name="target" ref="stevieTarget"/>
+	</bean>
+
+	
+
+
+	<!--
+	    autowiring byName
+	-->
+	<bean id="instrument" class="com.springinaction.springidol.instrument.Saxophone"/>
+	<bean id="kenny" class="com.springinaction.springidol.performer.InstrumentalistClassicSpringAspect" autowire="byName">
+		<property name="song" value="autowired song"/>
+	</bean>
+
+
+</beans>
