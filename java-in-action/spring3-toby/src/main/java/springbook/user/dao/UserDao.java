@@ -32,10 +32,13 @@ public class UserDao {
 		this.jdbcContext.workWithStatementStrategy(new StatementStrategy() {
 			@Override
 			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-				PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
+				PreparedStatement ps = c.prepareStatement("insert into users(id, name, password, level, login, recommend) values(?,?,?,?,?,?)");
 				ps.setString(1, user.getId());
 				ps.setString(2, user.getName());
 				ps.setString(3, user.getPassword());
+				ps.setInt(4, user.getLevel().intValue());
+				ps.setInt(5, user.getLogin());
+				ps.setInt(6, user.getRecommend());
 				return ps;
 			}
 		});

@@ -6,29 +6,46 @@ import static org.junit.Assert.*;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
+import org.springframework.jdbc.support.SQLExceptionTranslator;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import springbook.user.domain.Level;
 import springbook.user.domain.User;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "/applicationContext.xml")
 public class UserDaoTest {
 
+	@Autowired
+	UserDao dao; // UserDao interfaceを継承しているクラスが注入される。
+	@Autowired
+	DataSource dataSource;
+
 	ApplicationContext context;
-	UserDao dao;
+	//UserDao dao;
 	User user1;
 	User user2;
 	User user3;
 
 	@Before
 	public void setUp() {
-		context = new GenericXmlApplicationContext("applicationContext.xml");
-		dao = context.getBean("userDaoSpring", UserDao.class);
-		user1 = new User("b-id", "name", "pass");
-		user2 = new User("c-id2", "name2", "pass2");
-		user3 = new User("a-id3", "name3", "pass3");
+		//context = new GenericXmlApplicationContext("applicationContext.xml");
+		//dao = context.getBean("userDaoSpring", UserDao.class);
+		user1 = new User("b-id", "name", "pass", Level.BASIC, 1, 0);
+		user2 = new User("c-id2", "name2", "pass2", Level.SILVER, 55, 10);
+		user3 = new User("a-id3", "name3", "pass3", Level.GOLD, 100, 40);
 	}
 
 	@Test
@@ -41,12 +58,10 @@ public class UserDaoTest {
 		assertThat(dao.getCount(), is(2)); // 1件追加
 
 		User userget1 = dao.get(user1.getId());
-		assertThat(userget1.getName(), is(user1.getName()));
-		assertThat(userget1.getPassword(), is(user1.getPassword()));
+		checkSameUser(userget1, user1);
 
-		User userget2 = dao.get(user1.getId());
-		assertThat(userget2.getName(), is(user1.getName()));
-		assertThat(userget2.getPassword(), is(user1.getPassword()));
+		User userget2 = dao.get(user2.getId());
+		checkSameUser(userget2, user2);
 	}
 
 	@Test(expected = EmptyResultDataAccessException.class)
@@ -70,7 +85,6 @@ public class UserDaoTest {
 
 		dao.add(user3);
 		assertThat(dao.getCount(), is(3));
-
 	}
 
 	@Test
@@ -105,6 +119,55 @@ public class UserDaoTest {
 		assertThat(user1.getId(), is(user2.getId()));
 		assertThat(user1.getName(), is(user2.getName()));
 		assertThat(user1.getPassword(), is(user2.getPassword()));
+		assertThat(user1.getLevel(), is(user2.getLevel()));
+		assertThat(user1.getLogin(), is(user2.getLogin()));
+		assertThat(user1.getRecommend(), is(user2.getRecommend()));
+	}
 
+	@Test(expected = DataAccessException.class)
+	public void duplicateKey() {
+		dao.deleteAll();
+
+		dao.add(user1);
+		dao.add(user1);
+	}
+
+	/**
+	 * SQLException転換
+	 */
+	@Test
+	public void sqlExceptionTranslate() {
+		dao.deleteAll();
+
+		try {
+			dao.add(user1);
+			dao.add(user1);
+
+		} catch (DuplicateKeyException e) {
+			SQLException sqlEx = (SQLException) e.getRootCause();
+			SQLExceptionTranslator set = new SQLErrorCodeSQLExceptionTranslator(this.dataSource);
+
+			assertThat(set.translate(null, null, sqlEx), is(DuplicateKeyException.class));
+		}
+	}
+
+	@Test
+	public void update() {
+		dao.deleteAll();
+		dao.add(user1); // 修正するユーザ
+		dao.add(user2); // 修正しないユーザ
+
+		user1.setName("정주");
+		user1.setPassword("spring3");
+		user1.setLevel(Level.GOLD);
+		user1.setLogin(1000);
+		user1.setRecommend(999);
+		dao.update(user1);
+
+		User user1update = dao.get(user1.getId());
+		checkSameUser(user1update, user1);
+
+		User user2same = dao.get(user2.getId());
+		checkSameUser(user2same, user2);
 	}
 }
