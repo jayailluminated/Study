@@ -25,66 +25,66 @@ import springbook.user.domain.User;
 @DirtiesContext
 public class UserDaoWithSpringDirtiesContextTest {
 
-	@Autowired
-	ApplicationContext context;
-	@Autowired
-	UserDao userDao;
+    @Autowired
+    ApplicationContext context;
+    @Autowired
+    UserDao userDao;
 
-	@Before
-	public void setUp() {
-		DataSource dataSource = new SingleConnectionDataSource("jdbc:postgresql://localhost:5432/spring3testdb", "spring", "spring", true);
-	}
+    @Before
+    public void setUp() {
+        DataSource dataSource = new SingleConnectionDataSource("jdbc:postgresql://localhost:5432/spring3testdb", "spring", "spring", true);
+    }
 
-	@Test
-	public void addAndGet() throws SQLException {
+    @Test
+    public void addAndGet() throws SQLException {
 
-		UserDao userDao = context.getBean("userDao", UserDao.class);
+        UserDao userDao = context.getBean("userDao", UserDao.class);
 
-		User user1 = new User("id", "name", "pass");
-		User user2 = new User("id2", "name2", "pass2");
+        User user1 = new User("id", "name", "pass");
+        User user2 = new User("id2", "name2", "pass2");
 
-		userDao.deleteAll(); // 削除
-		assertThat(userDao.getCount(), is(0)); // カウント
+        userDao.deleteAll(); // 削除
+        assertThat(userDao.getCount(), is(0)); // カウント
 
-		userDao.add(user1);
-		userDao.add(user2);
-		assertThat(userDao.getCount(), is(2)); // 1件追加
+        userDao.add(user1);
+        userDao.add(user2);
+        assertThat(userDao.getCount(), is(2)); // 1件追加
 
-		User userget1 = userDao.get(user1.getId());
-		assertThat(userget1.getName(), is(user1.getName()));
-		assertThat(userget1.getPassword(), is(user1.getPassword()));
-		
-		
-		User userget2 = userDao.get(user1.getId());
-		assertThat(userget2.getName(), is(user1.getName()));
-		assertThat(userget2.getPassword(), is(user1.getPassword()));
-	}
+        User userget1 = userDao.get(user1.getId());
+        assertThat(userget1.getName(), is(user1.getName()));
+        assertThat(userget1.getPassword(), is(user1.getPassword()));
 
-	@Test(expected = EmptyResultDataAccessException.class)
-	public void getUserFailure() throws SQLException {
-		userDao.deleteAll();
-		assertThat(userDao.getCount(), is(0));
 
-		userDao.get("unknown id ");
-	}
+        User userget2 = userDao.get(user1.getId());
+        assertThat(userget2.getName(), is(user1.getName()));
+        assertThat(userget2.getPassword(), is(user1.getPassword()));
+    }
 
-	@Test
-	public void count() throws SQLException {
-		User user1 = new User("a", "あ", "い");
-		User user2 = new User("b", "た", "ち");
-		User user3 = new User("c", "は", "ひ");
+    @Test(expected = EmptyResultDataAccessException.class)
+    public void getUserFailure() throws SQLException {
+        userDao.deleteAll();
+        assertThat(userDao.getCount(), is(0));
 
-		userDao.deleteAll();
-		assertThat(userDao.getCount(), is(0));
+        userDao.get("unknown id ");
+    }
 
-		userDao.add(user1);
-		assertThat(userDao.getCount(), is(1));
+    @Test
+    public void count() throws SQLException {
+        User user1 = new User("a", "あ", "い");
+        User user2 = new User("b", "た", "ち");
+        User user3 = new User("c", "は", "ひ");
 
-		userDao.add(user2);
-		assertThat(userDao.getCount(), is(2));
+        userDao.deleteAll();
+        assertThat(userDao.getCount(), is(0));
 
-		userDao.add(user3);
-		assertThat(userDao.getCount(), is(3));
+        userDao.add(user1);
+        assertThat(userDao.getCount(), is(1));
 
-	}
+        userDao.add(user2);
+        assertThat(userDao.getCount(), is(2));
+
+        userDao.add(user3);
+        assertThat(userDao.getCount(), is(3));
+
+    }
 }
