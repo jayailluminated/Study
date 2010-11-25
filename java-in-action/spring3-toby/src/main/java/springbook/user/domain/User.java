@@ -71,4 +71,13 @@ public class User {
 		this.password = password;
 	}
 
+	public void upgradeLevel() {
+		Level nextLevel = this.level.nextLevel();
+		if (nextLevel == null) {
+			throw new IllegalStateException(this.level + "はアップグレードが不可能です。");
+		} else {
+			this.level = nextLevel;
+		}
+	}
+
 }
