@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,5 +32,30 @@ public class EasyMockSampleServletTest {
         replay(mockHttpSession);
 
         assertTrue(servlet.isAuthenticated(mockHttpServletRequest));
+    }
+
+    @Test
+    public void testIsAuthenticatedNotAuthenticated() {
+        expect(mockHttpSession.getAttribute(eq("authenticated"))).andReturn("false");
+        replay(mockHttpSession);
+        expect(mockHttpServletRequest.getSession(eq(false))).andReturn(mockHttpSession);
+        replay(mockHttpServletRequest);
+
+        assertFalse(servlet.isAuthenticated(mockHttpServletRequest));
+    }
+
+    @Test
+    public void testIsAuthenticateNoSession() {
+        expect(mockHttpServletRequest.getSession(eq(false))).andReturn(null);
+        replay(mockHttpServletRequest);
+        replay(mockHttpSession);
+
+        assertFalse(servlet.isAuthenticated(mockHttpServletRequest));
+    }
+
+    @After
+    public void tearDown() {
+        verify(mockHttpServletRequest);
+        verify(mockHttpSession);
     }
 }
