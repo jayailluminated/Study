@@ -20,8 +20,7 @@
  */
 package com.manning.junitbook.ch07.mocks.web;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +30,7 @@ import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -48,6 +48,7 @@ public class TestWebClientJMock {
     };
 
     @Test
+    @Ignore
     public void testGetContentOk() throws Exception {
         final ConnectionFactory factory = context.mock(ConnectionFactory.class);
         final InputStream mockStream = context.mock(InputStream.class);
