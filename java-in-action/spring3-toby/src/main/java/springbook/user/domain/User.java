@@ -9,6 +9,7 @@ public class User {
 	Level level;
 	int login;
 	int recommend;
+	String email;
 
 	public User() {
 		super();
@@ -29,6 +30,18 @@ public class User {
 		this.login = login;
 		this.recommend = recommend;
 	}
+
+	public User(String id, String name, String password, String email, Level level, int login, int recommend) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.email = email;
+		this.level = level;
+		this.login = login;
+		this.recommend = recommend;
+	}
+
 	public Level getLevel() {
 		return level;
 	}
@@ -69,6 +82,14 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public void upgradeLevel() {

@@ -9,7 +9,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>spring-in-action-data-access</artifactId>
+	<artifactId>data-access</artifactId>
 
 
 	<dependencies>

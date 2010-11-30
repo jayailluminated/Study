@@ -2,14 +2,14 @@ package springbook.user.service;
 
 import java.util.List;
 
-import springbook.spring3.user.dao.UserDao;
+import springbook.user.dao.IUserDao;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
 
 public class UserService {
-	UserDao userDao;
+	IUserDao userDao;
 
-	public void setUserDao(UserDao userDao) {
+	public void setUserDao(IUserDao userDao) {
 		this.userDao = userDao;
 	}
 

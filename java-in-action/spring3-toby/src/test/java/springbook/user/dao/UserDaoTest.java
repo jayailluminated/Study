@@ -24,7 +24,7 @@ public class UserDaoTest {
 
 	@Before
 	public void setUp() {
-		context = new GenericXmlApplicationContext("applicationContext.xml");
+		context = new GenericXmlApplicationContext("applicationContext_dataSource.xml");
 		userDao = context.getBean("userDao", UserDao.class);
 		user1 = new User("b-id", "name", "pass", Level.BASIC, 1, 0);
 		user2 = new User("c-id2", "name2", "pass2", Level.SILVER, 55, 10);

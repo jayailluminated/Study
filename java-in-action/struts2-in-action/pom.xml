@@ -6,7 +6,7 @@
 	<artifactId>struts2-in-action</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>AppFuse Struts 2 Application</name>
+	<name>struts2-in-action</name>
 	<url>http://www.mycompany.com</url>
 
 	<prerequisites>

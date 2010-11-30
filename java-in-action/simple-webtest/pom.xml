@@ -29,7 +29,8 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>provided</scope>
+            <version>4.8.1</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
