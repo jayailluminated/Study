@@ -2,6 +2,8 @@ package slf4j;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,26 +14,34 @@ import org.junit.Test;
  */
 public class HelloLogWorldTest {
 
-	static HelloLogWorld clz;
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@BeforeClass
-	public static void setUpOnce() {
-		clz = new HelloLogWorld();
-	}
+    static HelloLogWorld clz;
 
-	@Test
-	public void testPrintLogLevel() {
-		clz.printLogLevel();
-	}
+    @BeforeClass
+    public static void setUpOnce() {
+        clz = new HelloLogWorld();
+    }
 
-	@Test
-	public void testUsingSlf4jPlaceholder() {
-		clz.usingSlf4jPlaceholder(1);
-		clz.usingSlf4jPlaceholder(4);
-		clz.usingSlf4jPlaceholder(5);
-		clz.usingSlf4jPlaceholder(8);
-		clz.usingSlf4jPlaceholder(10);
-		clz.usingSlf4jPlaceholder(200);
-	}
+    @Test
+    public void testPrintLogLevel() {
+        clz.printLogLevel();
+    }
+
+    @Test
+    public void testUsingSlf4jPlaceholder() {
+        clz.usingSlf4jPlaceholder(1);
+        clz.usingSlf4jPlaceholder(4);
+        clz.usingSlf4jPlaceholder(5);
+        clz.usingSlf4jPlaceholder(8);
+        clz.usingSlf4jPlaceholder(10);
+        clz.usingSlf4jPlaceholder(200);
+    }
+
+
+    @Test
+    public void testLog() {
+        logger.debug("testtest");
+    }
 
 }
