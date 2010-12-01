@@ -25,7 +25,7 @@ import springbook.user.domain.Level;
 import springbook.user.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="/test-applicationContext.xml")
+@ContextConfiguration(locations = "/applicationContext_global_transaction.xml")
 public class UserServiceTest {
 	@Autowired
 	UserService userService;
@@ -40,11 +40,11 @@ public class UserServiceTest {
 	@Before
 	public void setUp() {
 		users = Arrays.asList(
-				new User("bumjin", "서", "p1", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER - 1, 0),
-				new User("joytouch", "정", "p2", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER, 0),
-				new User("erwins", "주", "p3", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD - 1),
-				new User("madnite1", "천", "p4", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD),
-				new User("green", "재", "p5", Level.GOLD, 100, Integer.MAX_VALUE)
+				new User("bumjin", "あ", "p1", "moretajoo@gmail.com", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER - 1, 0),
+				new User("joytouch", "い", "p2", "moretajoo@gmail.com", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER, 0),
+				new User("erwins", "う", "p3", "moretajoo@gmail.com", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD - 1),
+				new User("madnite1", "え", "p4", "moretajoo@gmail.com", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD),
+				new User("green", "お", "p5", "jjseo@c-square.co.jp", Level.GOLD, 100, Integer.MAX_VALUE)
 				);
 	}
 
@@ -129,8 +129,8 @@ public class UserServiceTest {
 		try {
 			testUserService.upgradeLevels();
 			fail("TestUserServiceException expected");
-		}
- catch (TestUserServiceException e) {
+		} catch (TestUserServiceException e) {
+
 		}
 
 		checkLevelUpgraded(users.get(1), false);

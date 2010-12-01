@@ -10,23 +10,24 @@
 		<property name="password" value="postgres" />
 	</bean>
 
-	<bean id="userDao" class="springbook.spring3.user.dao.impl.UserDaoJdbc">
+	<bean id="userDao" class="springbook.user.dao.impl.global.transaction.UserDaoJdbc">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="userService" class="springbook.transaction.user.service.UserService">
+	<bean id="userService" class="springbook.user.service.global.transaction.UserService">
 		<property name="userDao" ref="userDao" />
-	    <property name="dataSource" ref="dataSource" />
+	    <property name="transactionManager" ref="transactionManager" />
+	    <property name="mailSender" ref="mailSender" />
 	</bean>
 
 
-	<!--
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="mail.server.com" />
+		<property name="host" value="localhost" /><!-- mail server james on local -->
 	</bean>
-	 -->
-	<bean id="mailSender" class="springbook.user.service.DummyMailSender" />
 
+	 <!--
+	<bean id="mailSender" class="springbook.user.service.global.transaction.DummyMailSender" />
+ 	-->
 
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />

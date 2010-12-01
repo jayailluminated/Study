@@ -71,7 +71,7 @@ public class UserService {
 	private void sendUpgradeEMail(User user) {
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setTo(user.getEmail());
-		mailMessage.setFrom("moretajoo@gmail.com");
+		mailMessage.setFrom("moreta@naver.com");
 		mailMessage.setSubject("Upgrade level");
 		mailMessage.setText("your level upgraded : " + user.getLevel().name());
 
