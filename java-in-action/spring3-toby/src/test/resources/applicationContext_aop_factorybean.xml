@@ -14,19 +14,26 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="userService" class="springbook.user.service.global.transaction.UserService">
-		<property name="userDao" ref="userDao" />
+
+	<bean id="userService" class="springbook.user.service.factorybean.TxProxyFactoryBean">
+		<property name="target" ref="userServiceImple" />
 	    <property name="transactionManager" ref="transactionManager" />
+	    <property name="pattern" value="upgradeLevels" />
+		<property name="serviceInterface" value="springbook.user.service.aop.UserService" />
+	</bean>
+
+
+	<bean id="userServiceImpl" class="springbook.user.service.aop.UserServiceImpl">
+		<property name="userDao" ref="userDao" />
 	    <property name="mailSender" ref="mailSender" />
 	</bean>
 
-
-	<!-- mail server james on local -->
-	<!--
+<!-- mail server james or postfix on local -->
+<!--
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="localhost" />
 	</bean>
-	 -->
+-->
 
 	<bean id="mailSender" class="springbook.user.service.global.transaction.DummyMailSender" />
 
