@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.mail.MailException;
@@ -21,7 +22,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import springbook.user.dao.IUserDao;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
-import springbook.user.service.factorybean.TxProxyFactoryBean;
 
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -39,8 +39,8 @@ import static springbook.user.service.aop.UserServiceImpl.MIN_LOGCOUNT_FOR_SILVE
 import static springbook.user.service.aop.UserServiceImpl.MIN_RECOMMEND_FOR_GOLD;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "/applicationContext_aop_factorybean.xml")
-public class UserServiceByTransactionHandlerTest {
+@ContextConfiguration(locations = "/applicationContext_aop_spring.xml")
+public class UserServiceBySpringTest {
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -228,7 +228,7 @@ public class UserServiceByTransactionHandlerTest {
 		testUserService.setUserDao(this.userDao);
 		testUserService.setMailSender(this.mailSender);
 
-		TxProxyFactoryBean txProxyFactoryBean = context.getBean("&userService", TxProxyFactoryBean.class);
+		ProxyFactoryBean txProxyFactoryBean = context.getBean("&userService", ProxyFactoryBean.class);
 		txProxyFactoryBean.setTarget(testUserService);
 
 		UserService txUserService = (UserService) txProxyFactoryBean.getObject();
