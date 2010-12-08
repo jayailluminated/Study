@@ -15,6 +15,9 @@
         <level value="debug" />
     </logger>
 
+    <logger name="org.dbunit">
+        <level value="debug" />
+    </logger>
 
     <!-- Root Logger -->
     <root>
