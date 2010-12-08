@@ -233,6 +233,14 @@ public class UserServiceByClassFilterTest {
 	}
 
 	/**
+	 * 自動生成されたプロクシを確認
+	 */
+	@Test
+	public void advisorAutoProxyCreator() {
+		assertThat(testUserService, is(java.lang.reflect.Proxy.class));
+	}
+
+	/**
 	 * @author moretajoo
 	 * 変更① advisorから認識できるよるクラス名を変更
 	 * このクラスはspring beanとして登録
