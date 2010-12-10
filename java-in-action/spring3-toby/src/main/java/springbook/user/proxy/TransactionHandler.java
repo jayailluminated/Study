@@ -10,43 +10,43 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 public class TransactionHandler implements InvocationHandler {
 
-	private Object target;
-	private PlatformTransactionManager transactionManager; // transaction機能を提供する際に必要なmanager
-	private String pattern; // the method name that use transaction manager.
+    private Object target;
+    private PlatformTransactionManager transactionManager; // transaction讖溯�繧呈署萓帙☆繧矩圀縺ｫ蠢�ｦ√↑manager
+    private String pattern; // the method name that use transaction manager.
 
-	public void setTarget(Object target) {
-		this.target = target;
-	}
+    public void setTarget(Object target) {
+        this.target = target;
+    }
 
-	public void setTransactionManager(PlatformTransactionManager transactionManager) {
-		this.transactionManager = transactionManager;
-	}
+    public void setTransactionManager(PlatformTransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
+    }
 
-	public void setPattern(String pattern) {
-		this.pattern = pattern;
-	}
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
 
-	@Override
-	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-		if (method.getName().startsWith(pattern)) {
-			return invokeTransaction(method, args);
-		} else {
-			return method.invoke(target, args);
-		}
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        if (method.getName().startsWith(pattern)) {
+            return invokeTransaction(method, args);
+        } else {
+            return method.invoke(target, args);
+        }
 
-	}
+    }
 
-	private Object invokeTransaction(Method method, Object[] args) throws Throwable {
-		TransactionStatus status = this.transactionManager.getTransaction(new DefaultTransactionDefinition());
+    private Object invokeTransaction(Method method, Object[] args) throws Throwable {
+        TransactionStatus status = this.transactionManager.getTransaction(new DefaultTransactionDefinition());
 
-		try {
-			Object ret = method.invoke(target, args);
-			this.transactionManager.commit(status);
-			return ret;
-		} catch (InvocationTargetException e) {
-			this.transactionManager.rollback(status);
-			throw e.getTargetException();
-		}
-	}
+        try {
+            Object ret = method.invoke(target, args);
+            this.transactionManager.commit(status);
+            return ret;
+        } catch (InvocationTargetException e) {
+            this.transactionManager.rollback(status);
+            throw e.getTargetException();
+        }
+    }
 
 }
