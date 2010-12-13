@@ -10,6 +10,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>spring3-toby</artifactId>
+	<packaging>pom</packaging>
+
 	<dependencies>
 		<dependency>
 			<groupId>postgresql</groupId>
@@ -87,32 +89,8 @@
 
 	</dependencies>
 
-	<build>
 
-		<resources>
-			<resource>
-				<directory>src/main/java</directory>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-				<includes>
-					<include>**/*.xml</include>
-				</includes>
-			</resource>
-		</resources>
-		<testResources>
-			<testResource>
-				<directory>src/test/java</directory>
-			</testResource>
-			<testResource>
-				<directory>src/test/resources</directory>
-				<filtering>true</filtering>
-				<includes>
-					<include>**/*.xml</include>
-				</includes>
-			</testResource>
-		</testResources>
+	<build>
 		<plugins>
 			<plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
@@ -125,6 +103,10 @@
 	        </plugin>
 		</plugins>
 	</build>
+	<modules>
+		<module>spring3-toby-c6</module>
+		<module>spring3-toby-c7</module>
+	</modules>
 
 
 </project>

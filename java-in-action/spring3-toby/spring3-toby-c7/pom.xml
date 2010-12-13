@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>spring3-toby</artifactId>
+    <groupId>java-in-action</groupId>
+    <version>1.0</version>
+  </parent>
+  <groupId>java-in-action</groupId>
+  <artifactId>spring3-toby-c7</artifactId>
+  <version>1.0</version>
+  <name>spring3-toby-c7</name>
+
+   <build>
+	<resources>
+		<resource>
+			<directory>src/main/java</directory>
+		</resource>
+		<resource>
+			<directory>src/main/resources</directory>
+			<filtering>true</filtering>
+			<includes>
+				<include>**/*.xml</include>
+			</includes>
+		</resource>
+	</resources>
+	<testResources>
+		<testResource>
+			<directory>src/test/java</directory>
+		</testResource>
+		<testResource>
+			<directory>src/test/resources</directory>
+			<filtering>true</filtering>
+			<includes>
+				<include>**/*.xml</include>
+			</includes>
+		</testResource>
+	</testResources>
+   </build>
+
+</project>
