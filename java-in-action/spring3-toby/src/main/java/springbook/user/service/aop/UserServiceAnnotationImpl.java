@@ -9,7 +9,7 @@ import springbook.user.dao.IUserDao;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceAnnotationImpl implements UserServiceAnnotation {
 	public static final int MIN_LOGCOUNT_FOR_SILVER = 50;
 	public static final int MIN_RECOMMEND_FOR_GOLD = 30;
 

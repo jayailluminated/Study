@@ -199,7 +199,7 @@ public class UserServiceTest {
 		testUserService.setUserDao(this.userDao);
 		testUserService.setMailSender(this.mailSender);
 
-		UserServiceTx txUserService = new UserServiceTx();
+		UserServiceTxImpl txUserService = new UserServiceTxImpl();
 		txUserService.setTransactionManager(this.transactionManager);
 		txUserService.setUserService(testUserService);
 

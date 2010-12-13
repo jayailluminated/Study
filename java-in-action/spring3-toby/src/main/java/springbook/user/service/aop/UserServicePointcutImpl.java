@@ -9,7 +9,7 @@ import springbook.user.dao.IUserDao;
 import springbook.user.domain.Level;
 import springbook.user.domain.User;
 
-public class UserServiceImpl implements UserService {
+public class UserServicePointcutImpl implements UserServicePointcut {
 	public static final int MIN_LOGCOUNT_FOR_SILVER = 50;
 	public static final int MIN_RECOMMEND_FOR_GOLD = 30;
 
@@ -73,25 +73,6 @@ public class UserServiceImpl implements UserService {
 		this.mailSender.send(mailMessage);
 	}
 
-	@Override
-	public User get(String id) {
-		return userDao.get(id);
-	}
-
-	@Override
-	public List<User> getAll() {
-		return userDao.getAll();
-	}
-
-	@Override
-	public void deleteAll() {
-		userDao.deleteAll();
-	}
-
-	@Override
-	public void update(User user) {
-		userDao.update(user);
-	}
 
 }
 

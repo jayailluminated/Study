@@ -8,11 +8,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -33,17 +34,21 @@ import static org.mockito.Matchers.any;
 
 import static org.hamcrest.CoreMatchers.is;
 
-import static springbook.user.service.aop.UserServiceImpl.MIN_LOGCOUNT_FOR_SILVER;
-import static springbook.user.service.aop.UserServiceImpl.MIN_RECOMMEND_FOR_GOLD;
+import static springbook.user.service.aop.UserServicePointcutImpl.MIN_LOGCOUNT_FOR_SILVER;
+import static springbook.user.service.aop.UserServicePointcutImpl.MIN_RECOMMEND_FOR_GOLD;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "/applicationContext_aop_transaction.xml")
-public class UserServiceByMockitoTest {
-	@Autowired
-	UserService userService;
+@ContextConfiguration(locations = "/applicationContext_aop_pointcut.xml")
+public class UserServiceByPointcutTest {
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	UserServiceImpl userServiceImpl;
+	UserServicePointcut userService;
+	@Autowired
+	UserServicePointcut testUserService;
+
+	//@Autowired
+	//UserServicePointcutImpl UserServicePointcutImpl;
 
 	@Autowired
 	IUserDao userDao;
@@ -68,46 +73,37 @@ public class UserServiceByMockitoTest {
 
 	@Test
 	public void mockUpgradeLevels() {
-		UserServiceImpl userServiceImpl = new UserServiceImpl();
+		UserServicePointcutImpl UserServicePointcutImpl = new UserServicePointcutImpl();
 
 		IUserDao mockUserDao = mock(IUserDao.class);
 		when(mockUserDao.getAll()).thenReturn(this.users);
-		userServiceImpl.setUserDao(mockUserDao);
+		UserServicePointcutImpl.setUserDao(mockUserDao);
 
 		MailSender mockMailSender = mock(MailSender.class);
-		userServiceImpl.setMailSender(mockMailSender);
+		UserServicePointcutImpl.setMailSender(mockMailSender);
 
-		userServiceImpl.upgradeLevels();
+		UserServicePointcutImpl.upgradeLevels();
 
 		verify(mockUserDao, times(2)).update(any(User.class));
 		verify(mockUserDao, times(2)).update(any(User.class));
 	}
 
-	@Test @DirtiesContext
+	@Test
 	public void upgradeLevels() {
-		UserServiceImpl userServiceImpl = new UserServiceImpl();
+		UserServicePointcutImpl UserServicePointcutImpl = new UserServicePointcutImpl();
 
 		MockUserDao mockUserDao = new MockUserDao(this.users);
-		userServiceImpl.setUserDao(mockUserDao);
-
-		//userDao.deleteAll();
-		//for(User user : users) userDao.add(user);
+		UserServicePointcutImpl.setUserDao(mockUserDao);
 
 		MockMailSender mockMailSender = new MockMailSender();
-		userServiceImpl.setMailSender(mockMailSender);
+		UserServicePointcutImpl.setMailSender(mockMailSender);
 
-		userServiceImpl.upgradeLevels();
+		UserServicePointcutImpl.upgradeLevels();
 
 		List<User> updated = mockUserDao.getUpdated();
 		assertThat(updated.size(), is(2));
 		checkUserAndLevel(updated.get(0), "joytouch", Level.SILVER);
 		checkUserAndLevel(updated.get(1), "madnite1", Level.GOLD);
-
-		//		checkLevelUpgraded(users.get(0), false);
-		//		checkLevelUpgraded(users.get(1), true);
-		//		checkLevelUpgraded(users.get(2), false);
-		//		checkLevelUpgraded(users.get(3), true);
-		//		checkLevelUpgraded(users.get(4), false);
 
 		List<String> request = mockMailSender.getRequests();
 		assertThat(request.size(), is(2));
@@ -210,8 +206,8 @@ public class UserServiceByMockitoTest {
 		User userWithoutLevel = users.get(0);
 		userWithoutLevel.setLevel(null);
 
-		userServiceImpl.add(userWithLevel);
-		userServiceImpl.add(userWithoutLevel);
+		userService.add(userWithLevel);
+		userService.add(userWithoutLevel);
 
 		User userWithLevelRead = userDao.get(userWithLevel.getId());
 		User userWithoutLevelRead = userDao.get(userWithoutLevel.getId());
@@ -222,34 +218,38 @@ public class UserServiceByMockitoTest {
 
 	@Test
 	public void upgradeAllOrNothing() {
-		TestUserService testUserService = new TestUserService(users.get(3).getId());
-		testUserService.setUserDao(this.userDao);
-		testUserService.setMailSender(this.mailSender);
-
-		UserServiceTxImpl txUserService = new UserServiceTxImpl();
-		txUserService.setTransactionManager(this.transactionManager);
-		txUserService.setUserService(testUserService);
-
 		userDao.deleteAll();
-		for(User user : users) userDao.add(user);
+		for (User user : users)
+			userDao.add(user);
 
 		try {
-			txUserService.upgradeLevels(); // ※トランザクション機能を分離したオブジェクトを通してTestUserServiceが呼び出されるようにする。
+			this.testUserService.upgradeLevels(); // ※トランザクション機能を分離したオブジェクトを通してTestUserServiceが呼び出されるようにする。
 			fail("TestUserServiceException expected");
 		} catch (TestUserServiceException e) {
-
+			logger.debug("exception occur");
 		}
 
 		checkLevelUpgraded(users.get(1), false);
 	}
 
+	/**
+	 * 自動生成されたプロクシを確認
+	 */
+	@Test
+	public void advisorAutoProxyCreator() {
+		assertThat(testUserService, is(java.lang.reflect.Proxy.class));
+	}
 
-	static class TestUserService extends UserServiceImpl {
-		private final String id;
-
-		private TestUserService(String id) {
-			this.id = id;
-		}
+	/**
+	 * @author moretajoo
+	 * 変更① advisorから認識できるよるクラス名を変更
+	 * このクラスはspring beanとして登録
+	 * applicationContext_aop_classfilter.xml
+	 */
+	//static class TestUserService extends UserServicePointcutImpl {
+	static class TestUserServiceImpl extends UserServicePointcutImpl {
+		//private final String id;
+		private final String id = "madnite1";
 
 		@Override
 		protected void upgradeLevel(User user) {

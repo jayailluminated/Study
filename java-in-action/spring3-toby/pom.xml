@@ -30,6 +30,14 @@
 			<!-- tx >> aopalliance, aop, bean, context, core -->
 			<!-- context >> aop, bean, core, expression, asm -->
 		</dependency>
+		<!-- for pointcut test -->
+		<dependency>
+        	<groupId>org.aspectj</groupId>
+        	<artifactId>aspectjtools</artifactId>
+        	<version>1.6.9</version>
+        </dependency>
+
+		<!-- test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -42,6 +50,7 @@
 			<version>3.0.4.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-mail</artifactId>
@@ -75,7 +84,47 @@
         	<artifactId>mockito-all</artifactId>
         	<version>1.8.5</version>
         </dependency>
+
 	</dependencies>
+
+	<build>
+
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/java</directory>
+			</testResource>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</testResource>
+		</testResources>
+		<plugins>
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-compiler-plugin</artifactId>
+		        <configuration>
+		            <!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
+		            <source>1.6</source>
+		            <target>1.6</target>
+		        </configuration>
+	        </plugin>
+		</plugins>
+	</build>
 
 
 </project>

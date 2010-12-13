@@ -8,14 +8,19 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import springbook.user.dao.IUserDao;
 import springbook.user.domain.Level;
@@ -37,13 +42,17 @@ import static springbook.user.service.aop.UserServiceImpl.MIN_LOGCOUNT_FOR_SILVE
 import static springbook.user.service.aop.UserServiceImpl.MIN_RECOMMEND_FOR_GOLD;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "/applicationContext_aop_transaction.xml")
-public class UserServiceByMockitoTest {
-	@Autowired
-	UserService userService;
+@ContextConfiguration(locations = "/applicationContext_aop_transactionManager.xml")
+public class UserServiceByTransactionManagerTest {
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	UserServiceImpl userServiceImpl;
+	UserServiceAnnotation userService;
+	@Autowired
+	UserServiceAnnotation testUserService;
+
+	//@Autowired
+	//UserServiceImpl userServiceImpl;
 
 	@Autowired
 	IUserDao userDao;
@@ -83,15 +92,12 @@ public class UserServiceByMockitoTest {
 		verify(mockUserDao, times(2)).update(any(User.class));
 	}
 
-	@Test @DirtiesContext
+	@Test
 	public void upgradeLevels() {
 		UserServiceImpl userServiceImpl = new UserServiceImpl();
 
 		MockUserDao mockUserDao = new MockUserDao(this.users);
 		userServiceImpl.setUserDao(mockUserDao);
-
-		//userDao.deleteAll();
-		//for(User user : users) userDao.add(user);
 
 		MockMailSender mockMailSender = new MockMailSender();
 		userServiceImpl.setMailSender(mockMailSender);
@@ -102,12 +108,6 @@ public class UserServiceByMockitoTest {
 		assertThat(updated.size(), is(2));
 		checkUserAndLevel(updated.get(0), "joytouch", Level.SILVER);
 		checkUserAndLevel(updated.get(1), "madnite1", Level.GOLD);
-
-		//		checkLevelUpgraded(users.get(0), false);
-		//		checkLevelUpgraded(users.get(1), true);
-		//		checkLevelUpgraded(users.get(2), false);
-		//		checkLevelUpgraded(users.get(3), true);
-		//		checkLevelUpgraded(users.get(4), false);
 
 		List<String> request = mockMailSender.getRequests();
 		assertThat(request.size(), is(2));
@@ -210,8 +210,8 @@ public class UserServiceByMockitoTest {
 		User userWithoutLevel = users.get(0);
 		userWithoutLevel.setLevel(null);
 
-		userServiceImpl.add(userWithLevel);
-		userServiceImpl.add(userWithoutLevel);
+		userService.add(userWithLevel);
+		userService.add(userWithoutLevel);
 
 		User userWithLevelRead = userDao.get(userWithLevel.getId());
 		User userWithoutLevelRead = userDao.get(userWithoutLevel.getId());
@@ -222,34 +222,44 @@ public class UserServiceByMockitoTest {
 
 	@Test
 	public void upgradeAllOrNothing() {
-		TestUserService testUserService = new TestUserService(users.get(3).getId());
-		testUserService.setUserDao(this.userDao);
-		testUserService.setMailSender(this.mailSender);
-
-		UserServiceTxImpl txUserService = new UserServiceTxImpl();
-		txUserService.setTransactionManager(this.transactionManager);
-		txUserService.setUserService(testUserService);
-
 		userDao.deleteAll();
-		for(User user : users) userDao.add(user);
+		for (User user : users)
+			userDao.add(user);
 
 		try {
-			txUserService.upgradeLevels(); // ※トランザクション機能を分離したオブジェクトを通してTestUserServiceが呼び出されるようにする。
+			this.testUserService.upgradeLevels(); // ※トランザクション機能を分離したオブジェクトを通してTestUserServiceが呼び出されるようにする。
 			fail("TestUserServiceException expected");
 		} catch (TestUserServiceException e) {
-
+			logger.debug("exception occur");
 		}
 
 		checkLevelUpgraded(users.get(1), false);
 	}
 
+	/**
+	 * 自動生成されたプロクシを確認
+	 */
+	@Test
+	public void advisorAutoProxyCreator() {
+		assertThat(testUserService, is(java.lang.reflect.Proxy.class));
+	}
 
-	static class TestUserService extends UserServiceImpl {
-		private final String id;
+	@Test(expected = UncategorizedSQLException.class)
+	//@Test(expected = TransientDataAccessResourceException.class) // postgresqlの場合 UncategorizedSQLExceptionが発生する。
+	public void readOnlyTransactionAttribute() {
+		testUserService.getAll();
+	}
 
-		private TestUserService(String id) {
-			this.id = id;
-		}
+	/**
+	 * @author moretajoo
+	 * 変更① advisorから認識できるよるクラス名を変更
+	 * このクラスはspring beanとして登録
+	 * applicationContext_aop_classfilter.xml
+	 */
+	//static class TestUserService extends UserServiceImpl {
+	static class TestUserServiceImpl extends UserServiceAnnotationImpl {
+		//private final String id;
+		private final String id = "madnite1";
 
 		@Override
 		protected void upgradeLevel(User user) {
@@ -257,12 +267,59 @@ public class UserServiceByMockitoTest {
 				throw new TestUserServiceException();
 			super.upgradeLevel(user);
 		}
+
+		/* (non-Javadoc)
+		 * 읽기 전용 트랜잭션의 대상
+		 */
+		@Override
+		public List<User> getAll() {
+			for (User user : super.getAll()) {
+				super.update(user); //　ここでexceptionが発生
+			}
+			return null;
+		}
 	}
 
 	static class TestUserServiceException extends RuntimeException {
 	}
 
+	@Test
+	public void transactionSyncRollback() {
+		DefaultTransactionDefinition txDefinition = new DefaultTransactionDefinition();
+		TransactionStatus txStatus = transactionManager.getTransaction(txDefinition);
 
+		try {
+			userService.deleteAll();
+			userService.add(users.get(0));
+			userService.add(users.get(1));
+		} finally {
+			transactionManager.rollback(txStatus);
+		}
+	}
+
+	@Test(expected = UncategorizedSQLException.class)
+	public void transactionSync() {
+		DefaultTransactionDefinition txDefinition = new DefaultTransactionDefinition();
+		txDefinition.setReadOnly(true);
+
+		TransactionStatus txStatus = transactionManager.getTransaction(txDefinition);
+
+		userService.deleteAll();
+		userService.add(users.get(0));
+		userService.add(users.get(1));
+
+		transactionManager.commit(txStatus);
+	}
+
+
+
+	@Test(expected = UncategorizedSQLException.class)
+	@Transactional(readOnly = true)
+	public void transactionSyncAnnotation() {
+		userService.deleteAll();
+		userService.add(users.get(0));
+		userService.add(users.get(1));
+	}
 
 }
 
