@@ -18,7 +18,7 @@
  *
  * ========================================================================
  */
-package jjseo.test.steroids.model;
+package jjseo.test.jpa.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

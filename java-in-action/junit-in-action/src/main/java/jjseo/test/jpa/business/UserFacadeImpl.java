@@ -18,14 +18,14 @@
  *
  * ========================================================================
  */
-package jjseo.test.steroids.business;
+package jjseo.test.jpa.business;
 
 import java.util.List;
 
-import jjseo.test.steroids.dao.UserDao;
-import jjseo.test.steroids.model.Telephone;
-import jjseo.test.steroids.model.User;
-import jjseo.test.steroids.model.UserDto;
+import jjseo.test.jpa.dao.UserDao;
+import jjseo.test.jpa.model.Telephone;
+import jjseo.test.jpa.model.User;
+import jjseo.test.jpa.model.UserDto;
 
 public class UserFacadeImpl implements UserFacade {
 
@@ -41,7 +41,7 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-	public UserDto getUserById(long id) {
+    public UserDto getUserById(long id) {
         User user = userDao.getUserById(id);
         if (user == null) {
             return null;

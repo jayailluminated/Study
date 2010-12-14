@@ -1,8 +1,11 @@
-package jjseo.test.steroids.model;
+package jjseo.test.jpa;
 
 import java.util.List;
 
-import jjseo.test.steroids.model.Telephone.Type;
+import jjseo.test.jpa.model.Telephone;
+import jjseo.test.jpa.model.Telephone.Type;
+import jjseo.test.jpa.model.User;
+import jjseo.test.jpa.model.UserDto;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -50,21 +53,20 @@ public final class EntitiesHelper {
 
     public static void assertUser(UserDto user) {
         assertNotNull(user);
+
         assertEquals(USER_FIRST_NAME, user.getFirstName());
         assertEquals(USER_LAST_NAME, user.getLastName());
         assertEquals(USER_USERNAME, user.getUsername());
+
         List<String> telephones = user.getTelephones();
         assertEquals(2, telephones.size());
+
         String homePhone = telephones.get(0);
         String mobilePhone = telephones.get(1);
-        assertTrue("home phone does not contain type",
-                homePhone.contains(Type.HOME.toString()));
-        assertTrue("home phone does not contain number",
-                homePhone.contains(PHONE_HOME_NUMBER));
-        assertTrue("mobile phone does not contain type",
-                mobilePhone.contains(Type.MOBILE.toString()));
-        assertTrue("mobile phone does not contain number",
-                mobilePhone.contains(PHONE_MOBILE_NUMBER));
+        assertTrue("home phone does not contain type", homePhone.contains(Type.HOME.toString()));
+        assertTrue("home phone does not contain number", homePhone.contains(PHONE_HOME_NUMBER));
+        assertTrue("mobile phone does not contain type", mobilePhone.contains(Type.MOBILE.toString()));
+        assertTrue("mobile phone does not contain number", mobilePhone.contains(PHONE_MOBILE_NUMBER));
     }
 
     public static User newUser() {
@@ -88,6 +90,7 @@ public final class EntitiesHelper {
         Telephone homeNumber = new Telephone();
         homeNumber.setType(Type.HOME);
         homeNumber.setNumber(PHONE_HOME_NUMBER);
+
         List<Telephone> telephones = user.getTelephones();
         telephones.add(homeNumber);
         if (size == 2) {

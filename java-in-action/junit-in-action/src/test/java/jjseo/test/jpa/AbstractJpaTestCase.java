@@ -32,7 +32,8 @@ public abstract class AbstractJpaTestCase {
 
     @BeforeClass
     public static void setupDatabase() throws Exception {
-        entityManagerFactory = Persistence.createEntityManagerFactory("chapter-18");
+        // this information defined in the persistence.xml and hibernate.properties file **************
+        entityManagerFactory = Persistence.createEntityManagerFactory("jpa-persistence-unit-name");
         connection = getConnection(entityManagerFactory);
     }
 
@@ -49,20 +50,22 @@ public abstract class AbstractJpaTestCase {
         }
     }
 
+
+    @SuppressWarnings("unused")
     @Before
     public void setEntityManager() {
         em = entityManagerFactory.createEntityManager();
         // change if statement below to true to figure out the Hibernate
         // listeners
-        if (false) {
+
+        //if (false) {
+        if (true) {
             Object delegate = em.getDelegate();
             SessionImpl session = (SessionImpl) delegate;
             EventListeners listeners = session.getListeners();
-            PostInsertEventListener[] originalPostInsertEventListener = listeners
-                    .getPostInsertEventListeners();
+            PostInsertEventListener[] originalPostInsertEventListener = listeners.getPostInsertEventListeners();
             for (PostInsertEventListener listener : originalPostInsertEventListener) {
-                System.err.println(">>> PostInsertEventListener: "
-                        + listener.getClass().getName());
+                System.err.println(">>> PostInsertEventListener: " + listener.getClass().getName());
             }
         }
     }
@@ -73,11 +76,16 @@ public abstract class AbstractJpaTestCase {
         em.close();
     }
 
+    /**
+     * it's better to extract the JDBC connection from JPA's entity manager
+     */
     public static Connection getConnection(Object object) throws Exception {
         Connection connection = null;
+
         if (object instanceof EntityManagerFactoryImpl) {
             EntityManagerFactoryImpl impl = (EntityManagerFactoryImpl) object;
             SessionFactory sessionFactory = impl.getSessionFactory();
+
             if (sessionFactory instanceof SessionFactoryImpl) {
                 SessionFactoryImpl sfi = (SessionFactoryImpl) sessionFactory;
                 Settings settings = sfi.getSettings();
@@ -104,38 +112,4 @@ public abstract class AbstractJpaTestCase {
             em.clear();
         }
     }
-
-    protected void analyzeSchema(SqlHandler handler) {
-        ConfigurationCreator cfgCreator = new ConfigurationCreator();
-        Configuration cfg = cfgCreator.createConfiguration();
-        SchemaExport export = new SchemaExport(cfg);
-
-        // life would be much easier if Hibernate accepted a Writer on export...
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PrintStream oldOut = System.out;
-        PrintStream newOut = new PrintStream(outputStream);
-        System.setOut(newOut);
-        try {
-            export.create(true, true);
-            final String sql = outputStream.toString();
-            handler.handle(sql);
-        } finally {
-            System.setOut(oldOut);
-            newOut.close();
-        }
-
-    }
-
-    protected interface SqlHandler {
-        void handle(String sql);
-    }
-
-    // easiest way to get a configuration is extending the Ant task
-    private class ConfigurationCreator extends JPAConfigurationTask {
-        @Override
-        protected Configuration createConfiguration() {
-            return super.createConfiguration();
-        }
-    }
-
 }

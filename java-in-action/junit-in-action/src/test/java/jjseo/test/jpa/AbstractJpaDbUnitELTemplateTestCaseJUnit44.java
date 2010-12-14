@@ -1,24 +1,4 @@
-/*
- * ========================================================================
- *
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * ========================================================================
- */
-package jjseo.test.dbunit;
+package jjseo.test.jpa;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +8,8 @@ import java.lang.reflect.Method;
 
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
+
+import jjseo.test.dbunit.DataSets;
 
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
@@ -43,11 +25,14 @@ import static org.dbunit.Assertion.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @SuppressWarnings("deprecation")
-@RunWith(AbstractDbUnitELTemplateTestCaseJUnit44.DataSetsTemplateRunner.class)
-public abstract class AbstractDbUnitELTemplateTestCaseJUnit44 extends AbstractDbUnitTestCase {
+@RunWith(AbstractJpaDbUnitELTemplateTestCaseJUnit44.DataSetsTemplateRunner.class)
+public abstract class AbstractJpaDbUnitELTemplateTestCaseJUnit44 extends AbstractJpaDbUnitTestCase {
 
-    protected static long id;
     private static ELContextImpl context;
+
+    protected static ELContextImpl getContext() {
+        return context;
+    }
 
     public static class DataSetsTemplateRunner extends JUnit4ClassRunner {
 
@@ -58,10 +43,9 @@ public abstract class AbstractDbUnitELTemplateTestCaseJUnit44 extends AbstractDb
         @Override
         protected void invokeTestMethod(Method method, RunNotifier notifier) {
             context = new ELContextImpl();
-            context.bind("id", id);
+            ELFunctionMapperImpl.resetIds();
             setupDataSet(method);
             super.invokeTestMethod(method, notifier);
-            context.bind("id", id); //
             assertDataSet(method);
         }
 
@@ -74,6 +58,8 @@ public abstract class AbstractDbUnitELTemplateTestCaseJUnit44 extends AbstractDb
             if (!dataSetName.equals("")) {
                 try {
                     IDataSet dataSet = getReplacedDataSet(dataSetName);
+                    // System.err.println("Setup dataset \n: " +
+                    // AbstractJpaDbUnitELTemplateTestCaseJUnit44.toString(dataSet));
                     DatabaseOperation.CLEAN_INSERT.execute(dbunitConnection, dataSet);
                 } catch (Exception e) {
                     throw new RuntimeException("exception inserting dataset " + dataSetName, e);
@@ -90,28 +76,27 @@ public abstract class AbstractDbUnitELTemplateTestCaseJUnit44 extends AbstractDb
             if (!dataSetName.equals("")) {
                 try {
                     IDataSet expectedDataSet = getReplacedDataSet(dataSetName);
-                    IDataSet actualDataSet = dbunitConnection.createDataSet();
+                    IDataSet actualDataSet = getStrippedDataset(expectedDataSet);
+                    // System.err.println("Expected dataset \n: " +
+                    // AbstractJpaDbUnitELTemplateTestCaseJUnit44.toString(expectedDataSet));
+                    // System.err.println("Actual dataset \n: " +
+                    // AbstractJpaDbUnitELTemplateTestCaseJUnit44.toString(actualDataSet));
                     assertEquals(expectedDataSet, actualDataSet);
                 } catch (Exception e) {
-                    throw new RuntimeException("exception asserting dataset "
-                            + dataSetName, e);
+                    throw new RuntimeException("exception asserting dataset " + dataSetName, e);
                 }
             }
         }
     }
 
     public static IDataSet getReplacedDataSet(String name) throws Exception {
-        InputStream inputStream = AbstractDbUnitTestCase.class.getResourceAsStream(name);
+        InputStream inputStream = AbstractJpaDbUnitTestCase.class.getResourceAsStream(name);
         assertNotNull("file " + name + " not found in classpath", inputStream);
         Reader reader = new InputStreamReader(inputStream);
         final FlatXmlDataSet dataSet = new ELAwareFlatXmlDataSet(reader);
         final ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet);
         replacementDataSet.addReplacementObject("[NULL]", null);
         return replacementDataSet;
-    }
-
-    protected static ELContextImpl getContext() {
-        return context;
     }
 
     private static class ELAwareFlatXmlDataSet extends FlatXmlDataSet {
@@ -122,7 +107,7 @@ public abstract class AbstractDbUnitELTemplateTestCaseJUnit44 extends AbstractDb
 
         @Override
         public void row(Object[] values) throws DataSetException {
-            final ELContextImpl context = AbstractDbUnitELTemplateTestCaseJUnit44.getContext();
+            final ELContextImpl context = AbstractJpaDbUnitELTemplateTestCaseJUnit44.getContext();
             if (context != null) {
                 ExpressionFactory factory = context.getFactory();
                 int i = 0;

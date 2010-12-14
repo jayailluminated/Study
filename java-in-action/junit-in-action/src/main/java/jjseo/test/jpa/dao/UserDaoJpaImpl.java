@@ -1,11 +1,9 @@
-package jjseo.test.steroids.dao;
-
-import java.util.List;
+package jjseo.test.jpa.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import jjseo.test.steroids.model.User;
+import jjseo.test.jpa.model.User;
 
 public class UserDaoJpaImpl implements UserDao {
 

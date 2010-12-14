@@ -1,17 +1,19 @@
-package jjseo.test.steroids.business;
+package jjseo.test.jpa.business;
 
-import jjseo.test.steroids.dao.UserDao;
-import jjseo.test.steroids.model.User;
-import jjseo.test.steroids.model.UserDto;
+import jjseo.test.jpa.dao.UserDao;
+import jjseo.test.jpa.model.User;
+import jjseo.test.jpa.model.UserDto;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import static jjseo.test.jpa.EntitiesHelper.assertUser;
+import static jjseo.test.jpa.EntitiesHelper.newUserWithTelephones;
 import static junit.framework.Assert.assertNull;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
-import static jjseo.test.steroids.model.EntitiesHelper.*;
+
 
 public class UserFacadeImplTest {
 

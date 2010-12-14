@@ -1,4 +1,4 @@
-package jjseo.test.dbunit;
+package jjseo.test.jpa;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -62,8 +62,7 @@ public final class ELContextImpl extends ELContext {
         }
 
         @Override
-        public ValueExpression setVariable(String s,
-                ValueExpression valueExpression) {
+        public ValueExpression setVariable(String s, ValueExpression valueExpression) {
             return (variables.put(s, valueExpression));
         }
     }

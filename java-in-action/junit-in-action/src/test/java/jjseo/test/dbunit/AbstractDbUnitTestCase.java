@@ -20,11 +20,11 @@
  */
 package jjseo.test.dbunit;
 
-import static org.junit.Assert.*;
-
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+
+import jjseo.test.dbunit.UserDaoJdbcImpl;
 
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ReplacementDataSet;
@@ -34,6 +34,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.junit.Assert.assertNotNull;
 
 public abstract class AbstractDbUnitTestCase {
 

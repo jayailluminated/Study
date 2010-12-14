@@ -1,6 +1,6 @@
-package jjseo.test.steroids.dao;
+package jjseo.test.jpa.dao;
 
-import jjseo.test.steroids.model.User;
+import jjseo.test.jpa.model.User;
 
 public interface UserDao {
 
