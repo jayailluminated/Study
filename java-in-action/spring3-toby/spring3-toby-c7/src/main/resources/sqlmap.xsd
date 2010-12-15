@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-		targetNamespace="http://www.epril.com/sqlmap"
-		xmlns:tns="http://www.epril.com/sqlmap" elementFormDefault="qualified">
+		targetNamespace="http://www.moreta.com/sqlmap"
+		xmlns:tns="http://www.moreta.com/sqlmap" elementFormDefault="qualified">
 
 	<element name="sqlmap">
-		<complexType>
-			<sequence>
-				<element name="sql" maxOccurs="unbounded" type="tns:sqlType" />
-			</sequence>
-		</complexType>
-	</element>
+        <complexType>
+            <sequence>
+                <element name="sql" maxOccurs="unbounded" type="tns:sqlType" />
+            </sequence>
+        </complexType>
+    </element>
 
 	<complexType name="sqlType">
 		<simpleContent>
