@@ -38,16 +38,15 @@ import org.junit.runners.model.Statement;
  *
  * @version $Id: InterceptorRunner.java 201 2009-02-15 19:18:09Z paranoid12 $
  */
-public class InterceptorRunner
-    extends BlockJUnit4ClassRunner
-{
+public class InterceptorRunner extends BlockJUnit4ClassRunner {
+
     /**
-     * This is the InterceptorClasses annotation, which serves to hold our interceptor class implementations.
+     * This is the InterceptorClasses annotation, which serves to hold our
+     * interceptor class implementations.
      */
-    @Retention( RetentionPolicy.RUNTIME )
-    @Target( ElementType.TYPE )
-    public @interface InterceptorClasses
-    {
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    public @interface InterceptorClasses {
         /**
          * @return the classes to be run
          */
@@ -57,41 +56,36 @@ public class InterceptorRunner
     /**
      * This constructor is a must.
      *
-     * @param clazz the test-case class
+     * @param clazz
+     *            the test-case class
      */
-    public InterceptorRunner( Class<?> clazz )
-        throws InitializationError
-    {
-        super( clazz );
+    public InterceptorRunner(Class<?> clazz) throws InitializationError {
+        super(clazz);
     }
 
     /**
-     * Override the methodInvoker, so that when it is called we wrap the statement with our own.
+     * Override the methodInvoker, so that when it is called we wrap the
+     * statement with our own.
      *
-     * @param method the test method
-     * @param test the test-case
+     * @param method
+     *            the test method
+     * @param test
+     *            the test-case
      */
     @Override
-    public Statement methodInvoker( FrameworkMethod method, Object test )
-    {
-        InterceptorStatement statement = new InterceptorStatement( super.methodInvoker( method, test ) );
-        InterceptorClasses annotation = test.getClass().getAnnotation( InterceptorClasses.class );
+    public Statement methodInvoker(FrameworkMethod method, Object test) {
+        InterceptorStatement statement = new InterceptorStatement(super.methodInvoker(method, test));
+        InterceptorClasses annotation = test.getClass().getAnnotation(InterceptorClasses.class);
         Class<?>[] klasez = annotation.value();
-        try
-        {
-            for ( Class<?> klaz : klasez )
-            {
+        try {
+            for (Class<?> klaz : klasez) {
 
-                statement.addInterceptor( (Interceptor) klaz.newInstance() );
+                statement.addInterceptor((Interceptor) klaz.newInstance());
 
             }
-        }
-        catch ( IllegalAccessException ilex )
-        {
+        } catch (IllegalAccessException ilex) {
             ilex.printStackTrace();
-        }
-        catch ( InstantiationException e )
-        {
+        } catch (InstantiationException e) {
             e.printStackTrace();
         }
         return statement;

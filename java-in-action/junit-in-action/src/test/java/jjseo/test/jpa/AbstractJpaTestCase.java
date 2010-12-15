@@ -1,7 +1,5 @@
 package jjseo.test.jpa;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.sql.Connection;
 
 import javax.persistence.EntityManager;
@@ -9,7 +7,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Settings;
 import org.hibernate.connection.ConnectionProvider;
 import org.hibernate.ejb.EntityManagerFactoryImpl;
@@ -17,14 +14,18 @@ import org.hibernate.event.EventListeners;
 import org.hibernate.event.PostInsertEventListener;
 import org.hibernate.impl.SessionFactoryImpl;
 import org.hibernate.impl.SessionImpl;
-import org.hibernate.tool.ant.JPAConfigurationTask;
-import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractJpaTestCase {
+
+    protected Logger log = LoggerFactory.getLogger(this.getClass());
+
+
 
     private static EntityManagerFactory entityManagerFactory;
     protected static Connection connection;
@@ -55,11 +56,11 @@ public abstract class AbstractJpaTestCase {
     @Before
     public void setEntityManager() {
         em = entityManagerFactory.createEntityManager();
+
         // change if statement below to true to figure out the Hibernate
         // listeners
-
-        //if (false) {
-        if (true) {
+        if (false) {
+        //if (true) {
             Object delegate = em.getDelegate();
             SessionImpl session = (SessionImpl) delegate;
             EventListeners listeners = session.getListeners();

@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 
-import jjseo.test.dbunit.DataSets;
+import jjseo.test.DataSetsJpa;
 
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
@@ -50,7 +50,8 @@ public abstract class AbstractJpaDbUnitELTemplateTestCaseJUnit44 extends Abstrac
         }
 
         private void setupDataSet(Method method) {
-            DataSets dataSetAnnotation = method.getAnnotation(DataSets.class);
+            DataSetsJpa dataSetAnnotation = method
+                    .getAnnotation(DataSetsJpa.class);
             if (dataSetAnnotation == null) {
                 return;
             }
@@ -60,15 +61,18 @@ public abstract class AbstractJpaDbUnitELTemplateTestCaseJUnit44 extends Abstrac
                     IDataSet dataSet = getReplacedDataSet(dataSetName);
                     // System.err.println("Setup dataset \n: " +
                     // AbstractJpaDbUnitELTemplateTestCaseJUnit44.toString(dataSet));
-                    DatabaseOperation.CLEAN_INSERT.execute(dbunitConnection, dataSet);
+                    DatabaseOperation.CLEAN_INSERT.execute(dbunitConnection,
+                            dataSet);
                 } catch (Exception e) {
-                    throw new RuntimeException("exception inserting dataset " + dataSetName, e);
+                    throw new RuntimeException("exception inserting dataset "
+                            + dataSetName, e);
                 }
             }
         }
 
         private void assertDataSet(Method method) {
-            DataSets dataSetAnnotation = method.getAnnotation(DataSets.class);
+            DataSetsJpa dataSetAnnotation = method
+                    .getAnnotation(DataSetsJpa.class);
             if (dataSetAnnotation == null) {
                 return;
             }
@@ -90,18 +94,21 @@ public abstract class AbstractJpaDbUnitELTemplateTestCaseJUnit44 extends Abstrac
     }
 
     public static IDataSet getReplacedDataSet(String name) throws Exception {
-        InputStream inputStream = AbstractJpaDbUnitTestCase.class.getResourceAsStream(name);
+        InputStream inputStream = AbstractJpaDbUnitTestCase.class
+                .getResourceAsStream(name);
         assertNotNull("file " + name + " not found in classpath", inputStream);
         Reader reader = new InputStreamReader(inputStream);
         final FlatXmlDataSet dataSet = new ELAwareFlatXmlDataSet(reader);
-        final ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet);
+        final ReplacementDataSet replacementDataSet = new ReplacementDataSet(
+                dataSet);
         replacementDataSet.addReplacementObject("[NULL]", null);
         return replacementDataSet;
     }
 
     private static class ELAwareFlatXmlDataSet extends FlatXmlDataSet {
 
-        public ELAwareFlatXmlDataSet(Reader reader) throws DataSetException, IOException {
+        public ELAwareFlatXmlDataSet(Reader reader) throws DataSetException,
+                IOException {
             super(reader);
         }
 
@@ -114,8 +121,9 @@ public abstract class AbstractJpaDbUnitELTemplateTestCaseJUnit44 extends Abstrac
                 for (Object value : values) {
                     String stringValue = "" + value;
                     Object newValue;
-                    if (stringValue.startsWith("${") && stringValue.endsWith("}")) {
-                        ValueExpression converted = factory.createValueExpression(context, stringValue, Object.class);
+                    if (stringValue.startsWith("${")
+                            && stringValue.endsWith("}")) {
+                        ValueExpression converted = factory.createValueExpression(context, stringValue,Object.class);
                         newValue = converted.getValue(context);
                     } else {
                         newValue = value;

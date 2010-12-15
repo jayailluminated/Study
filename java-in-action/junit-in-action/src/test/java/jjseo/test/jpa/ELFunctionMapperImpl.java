@@ -7,7 +7,12 @@ import java.util.Map;
 
 import javax.el.FunctionMapper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ELFunctionMapperImpl extends FunctionMapper {
+
+    static Logger log = LoggerFactory.getLogger(ELFunctionMapperImpl.class);
 
     private static final Map<String, Method> METHODS = new HashMap<String, Method>();
 
@@ -20,6 +25,7 @@ public class ELFunctionMapperImpl extends FunctionMapper {
             int modifiers = method.getModifiers();
             String name = method.getName();
             if (Modifier.isStatic(modifiers) && name.startsWith("db_")) {
+                log.debug("METHODS  : "+name.replace('_', ':'));
                 METHODS.put(name.replace('_', ':'), method);
             }
         }

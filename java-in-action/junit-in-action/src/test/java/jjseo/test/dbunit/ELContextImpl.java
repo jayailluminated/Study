@@ -26,7 +26,7 @@ public final class ELContextImpl extends ELContext {
     ELContextImpl() {
         final String factoryClass = "org.apache.el.ExpressionFactoryImpl";
         System.setProperty("javax.el.ExpressionFactory", factoryClass);
-        factory = new ExpressionFactoryImpl();
+        factory = ExpressionFactoryImpl.newInstance();
         if (factory == null) {
             throw new RuntimeException("could not get instance of factory class " + factoryClass);
         }

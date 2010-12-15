@@ -22,6 +22,7 @@ package jjseo.test.dbunit;
 
 import java.lang.reflect.Method;
 
+import jjseo.test.DataSetsDbUnit;
 
 import org.dbunit.Assertion;
 import org.dbunit.dataset.IDataSet;
@@ -66,7 +67,7 @@ public class AbstractDbUnitTemplateTestCase extends AbstractDbUnitTestCase {
         }
 
         private void setupDataSet(FrameworkMethod method) {
-            DataSets dataSetAnnotation = getAnnotation(method);
+            DataSetsDbUnit dataSetAnnotation = getAnnotation(method);
             String dataSetName = dataSetAnnotation.setUpDataSet();
             if (!dataSetName.equals("")) {
                 try {
@@ -79,7 +80,7 @@ public class AbstractDbUnitTemplateTestCase extends AbstractDbUnitTestCase {
         }
 
         private void assertDataSet(FrameworkMethod method) {
-            DataSets dataSetAnnotation = getAnnotation(method);
+            DataSetsDbUnit dataSetAnnotation = getAnnotation(method);
             String dataSetName = dataSetAnnotation.assertDataSet();
             if (!dataSetName.equals("")) {
                 try {
@@ -92,9 +93,9 @@ public class AbstractDbUnitTemplateTestCase extends AbstractDbUnitTestCase {
             }
         }
 
-        private DataSets getAnnotation(FrameworkMethod method) {
+        private DataSetsDbUnit getAnnotation(FrameworkMethod method) {
             Method javaMethod = method.getMethod();
-            return javaMethod.getAnnotation(DataSets.class);
+            return javaMethod.getAnnotation(DataSetsDbUnit.class);
         }
 
     }

@@ -1,6 +1,6 @@
 package jjseo.test.jpa;
 
-import jjseo.test.dbunit.DataSets;
+import jjseo.test.DataSetsJpa;
 import jjseo.test.jpa.model.User;
 
 import org.junit.Test;
@@ -11,7 +11,7 @@ import static jjseo.test.jpa.EntitiesHelper.newUserWithTelephone;
 public class EntitiesMappingTest extends AbstractJpaDbUnitELTemplateTestCaseJUnit44 {
 
     @Test
-    @DataSets(setUpDataSet = "/user-with-telephone.xml")
+    @DataSetsJpa(setUpDataSet = "/jpa/user-with-telephone.xml")
     public void testLoadUserWithTelephone() {
         beginTransaction();
         long id = ELFunctionMapperImpl.getId(User.class);
@@ -22,7 +22,7 @@ public class EntitiesMappingTest extends AbstractJpaDbUnitELTemplateTestCaseJUni
 
 
     @Test
-    @DataSets(assertDataSet = "/user-with-telephone.xml")
+    @DataSetsJpa(assertDataSet = "/jpa/user-with-telephone.xml")
     public void testSaveUserWithTelephone() throws Exception {
         User user = newUserWithTelephone();
         beginTransaction();
@@ -31,20 +31,20 @@ public class EntitiesMappingTest extends AbstractJpaDbUnitELTemplateTestCaseJUni
     }
 
     @Test
-    @DataSets(assertDataSet = "/user-with-telephone.xml")
+    @DataSetsJpa(assertDataSet = "/jpa/user-with-telephone.xml")
     public void testSaveUserWithTelephoneAgain() throws Exception {
         testSaveUserWithTelephone();
     }
 
     @Test
-    @DataSets(setUpDataSet = "/user-with-telephone.xml")
+    @DataSetsJpa(setUpDataSet = "/jpa/user-with-telephone.xml")
     public void testLoadUserWithTelephoneOneMoreTime() {
         testLoadUserWithTelephone();
     }
 
 
     @Test
-    @DataSets(assertDataSet = "/user-with-telephone.xml")
+    @DataSetsJpa(assertDataSet = "/jpa/user-with-telephone.xml")
     public void testSaveUserWithTelephoneOneMoreTime() throws Exception {
         testSaveUserWithTelephone();
     }

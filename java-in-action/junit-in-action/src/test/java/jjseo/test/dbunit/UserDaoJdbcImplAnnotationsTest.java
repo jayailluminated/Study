@@ -20,24 +20,27 @@
  */
 package jjseo.test.dbunit;
 
-import static jjseo.test.dbunit.EntitiesHelper.*;
-import static org.junit.Assert.*;
+import jjseo.test.DataSetsDbUnit;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static jjseo.test.dbunit.EntitiesHelper.assertUser;
+import static jjseo.test.dbunit.EntitiesHelper.newUser;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AbstractDbUnitTemplateTestCase.DataSetsTemplateRunner.class)
 public class UserDaoJdbcImplAnnotationsTest extends AbstractDbUnitTemplateTestCase {
 
   @Test
-  @DataSets(setUpDataSet="/dbunit/user-token.xml")
+  @DataSetsDbUnit(setUpDataSet="/dbunit/user-token.xml")
   public void testGetUserById() throws Exception {
     User user = dao.getUserById(id);
     assertUser(user);
   }
 
   @Test
-  @DataSets(assertDataSet="/dbunit/user-token.xml")
+  @DataSetsDbUnit(assertDataSet="/dbunit/user-token.xml")
   public void testAddUser() throws Exception {
     User user = newUser();
     id = dao.addUser(user);

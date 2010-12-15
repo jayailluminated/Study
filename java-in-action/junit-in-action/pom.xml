@@ -42,6 +42,7 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>1.8.5</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- easymock -->
@@ -63,11 +64,13 @@
             <groupId>org.jmock</groupId>
             <artifactId>jmock-legacy</artifactId>
             <version>2.5.1</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jmock</groupId>
             <artifactId>jmock-junit4</artifactId>
             <version>2.5.1</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- servlet -->
@@ -133,6 +136,7 @@
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>
             <version>2.4.8</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- database for test -->
@@ -175,9 +179,26 @@
 
         <!-- el api -->
         <dependency>
+            <!-- EL specification -->
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <!-- EL implementation -->
             <groupId>org.apache.tomcat</groupId>
             <artifactId>jasper-el</artifactId>
-            <version>6.0.29</version>
+            <version>6.0.18</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <!-- Apache's EL does not have the ExpressionFactory.newInstance() method -->
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>el-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -213,6 +234,14 @@
             <artifactId>geronimo-spec-jta</artifactId>
             <version>1.0.1B-rc4</version>
             <scope>provided</scope>
+        </dependency>
+
+
+        <!-- commons -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.5</version>
         </dependency>
     </dependencies>
 
@@ -251,6 +280,18 @@
         </testResources>
 
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+
+            <!--
             <plugin>
                 <groupId>org.apache.cactus</groupId>
                 <artifactId>cactus.integration.maven2</artifactId>
@@ -308,8 +349,6 @@
                         <containerId>tomcat5x</containerId>
                         <log>target/cargo.log</log>
                         <output>target/output.log</output>
-                        <!-- If you don't want cargo to download the container, just comment
-                            the bottom lines and specify a [home] parameter -->
                         <zipUrlInstaller>
                             <url>http://apache.speedbone.de/tomcat/tomcat-5/v5.5.27/bin/apache-tomcat-5.5.27.zip</url>
                             <installDir>${basedir}/install</installDir>
@@ -329,6 +368,7 @@
                     </configuration>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -359,9 +399,7 @@
                 <configuration>
                     <useCache>false</useCache>
                     <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
-                    <warSourceIncludes>
-                        *, test/*, WEB-INF/classes/**
-                    </warSourceIncludes>
+                    <warSourceIncludes>*, test/*, WEB-INF/classes/**</warSourceIncludes>
                     <packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
                 </configuration>
                 <executions>
@@ -374,6 +412,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
         </plugins>
     </build>
 

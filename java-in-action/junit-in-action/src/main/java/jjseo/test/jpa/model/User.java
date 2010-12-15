@@ -35,6 +35,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.ForeignKey;
 
+import static org.apache.commons.lang.builder.ToStringBuilder.reflectionToString;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -94,6 +96,11 @@ public class User {
 
     public void setTelephones(List<Telephone> telephones) {
         this.telephones = telephones;
+    }
+
+    @Override
+    public String toString() {
+        return reflectionToString(this);
     }
 
 }

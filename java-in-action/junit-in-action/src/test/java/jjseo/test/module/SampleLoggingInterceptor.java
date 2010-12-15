@@ -23,29 +23,27 @@ package jjseo.test.module;
 import jjseo.test.module.model.Interceptor;
 
 /**
- * A sample logging interceptor that logs messages right before and after every test.
+ * A sample logging interceptor that logs messages right before and after every
+ * test.
  *
- * @version $Id: SampleLoggingInterceptor.java 201 2009-02-15 19:18:09Z paranoid12 $
+ * @version $Id: SampleLoggingInterceptor.java 201 2009-02-15 19:18:09Z
+ *          paranoid12 $
  */
-public class SampleLoggingInterceptor
-    implements Interceptor
-{
+public class SampleLoggingInterceptor implements Interceptor {
 
     /**
      * The method to execute before the test.
      */
     @Override
-	public void interceptBefore()
-    {
-        System.out.println( "Before-test" );
+    public void interceptBefore() {
+        System.out.println("Before-test");
     }
 
     /**
      * The method to execute after the test.
      */
     @Override
-	public void interceptAfter()
-    {
-        System.out.println( "After-test" );
+    public void interceptAfter() {
+        System.out.println("After-test");
     }
 }

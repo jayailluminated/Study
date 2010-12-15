@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 
-import jjseo.test.dbunit.DataSets;
+import jjseo.test.DataSetsJpa;
 
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
@@ -26,8 +26,7 @@ import static org.junit.Assert.assertNotNull;
 
 @SuppressWarnings("deprecation")
 @RunWith(AbstractJpaDbUnitELTemplateTestCaseJUnit44V0.DataSetsTemplateRunner.class)
-public abstract class AbstractJpaDbUnitELTemplateTestCaseJUnit44V0 extends
-        AbstractJpaDbUnitTestCaseV0 {
+public abstract class AbstractJpaDbUnitELTemplateTestCaseJUnit44V0 extends AbstractJpaDbUnitTestCaseV0 {
 
     private static ELContextImpl context;
 
@@ -55,7 +54,7 @@ public abstract class AbstractJpaDbUnitELTemplateTestCaseJUnit44V0 extends
         }
 
         private void setupDataSet(Method method) {
-            DataSets dataSetAnnotation = method.getAnnotation(DataSets.class);
+            DataSetsJpa dataSetAnnotation = method.getAnnotation(DataSetsJpa.class);
             if (dataSetAnnotation == null) {
                 return;
             }
@@ -73,7 +72,7 @@ public abstract class AbstractJpaDbUnitELTemplateTestCaseJUnit44V0 extends
         }
 
         private void assertDataSet(Method method) {
-            DataSets dataSetAnnotation = method.getAnnotation(DataSets.class);
+            DataSetsJpa dataSetAnnotation = method.getAnnotation(DataSetsJpa.class);
             if (dataSetAnnotation == null) {
                 return;
             }
@@ -88,8 +87,7 @@ public abstract class AbstractJpaDbUnitELTemplateTestCaseJUnit44V0 extends
                     // AbstractJpaDbUnitELTemplateTestCaseJUnit44V0.toString(actualDataSet));
                     assertEquals(expectedDataSet, actualDataSet);
                 } catch (Exception e) {
-                    throw new RuntimeException("exception asserting dataset "
-                            + dataSetName, e);
+                    throw new RuntimeException("exception asserting dataset " + dataSetName, e);
                 }
             }
         }

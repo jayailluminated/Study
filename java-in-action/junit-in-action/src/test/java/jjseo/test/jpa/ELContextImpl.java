@@ -1,6 +1,5 @@
 package jjseo.test.jpa;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,13 +11,12 @@ import javax.el.FunctionMapper;
 import javax.el.ValueExpression;
 import javax.el.VariableMapper;
 
-import org.apache.el.ExpressionFactoryImpl;
 import org.apache.el.ValueExpressionLiteral;
 
 public final class ELContextImpl extends ELContext {
 
     private final BeanELResolver resolver = new BeanELResolver();
-    private final FunctionMapper functionMapper = new NoopFunctionMapper();
+    private final FunctionMapper functionMapper = new ELFunctionMapperImpl();
     private final VariableMapper variableMapper = new VariableMapperImpl();
     private final Map<String, ValueExpression> variables = new HashMap<String, ValueExpression>();
     private final ExpressionFactory factory;
@@ -26,9 +24,10 @@ public final class ELContextImpl extends ELContext {
     ELContextImpl() {
         final String factoryClass = "org.apache.el.ExpressionFactoryImpl";
         System.setProperty("javax.el.ExpressionFactory", factoryClass);
-        factory = new ExpressionFactoryImpl();
+        factory = ExpressionFactory.newInstance();
         if (factory == null) {
-            throw new RuntimeException("could not get instance of factory class " + factoryClass);
+            throw new RuntimeException(
+                    "could not get instance of factory class " + factoryClass);
         }
     }
 
@@ -66,13 +65,4 @@ public final class ELContextImpl extends ELContext {
             return (variables.put(s, valueExpression));
         }
     }
-
-    private class NoopFunctionMapper extends FunctionMapper {
-        @Override
-        public Method resolveFunction(String s, String s1) {
-            return null;
-        }
-
-    }
-
 }

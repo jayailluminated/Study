@@ -42,20 +42,17 @@ public abstract class AbstractJpaDbUnitTestCase extends AbstractJpaTestCase {
     }
 
     private static InputStream getInputStream(String path) {
-        InputStream inputStream = AbstractJpaDbUnitTestCase.class
-                .getResourceAsStream(path);
+        InputStream inputStream = AbstractJpaDbUnitTestCase.class.getResourceAsStream(path);
         assertNotNull("file " + path + " not found in classpath", inputStream);
         return inputStream;
     }
 
-    public static IDataSet getReplacedDataSet(String name, long id)
-            throws Exception {
+    public static IDataSet getReplacedDataSet(String name, long id) throws Exception {
         IDataSet originalDataSet = getDataSet(name);
         return getReplacedDataSet(originalDataSet, id);
     }
 
-    public static IDataSet getReplacedDataSet(IDataSet originalDataSet, long id)
-            throws Exception {
+    public static IDataSet getReplacedDataSet(IDataSet originalDataSet, long id) throws Exception {
         ReplacementDataSet replacementDataSet = new ReplacementDataSet(
                 originalDataSet);
         replacementDataSet.addReplacementObject("[NULL]", null);
@@ -67,15 +64,13 @@ public abstract class AbstractJpaDbUnitTestCase extends AbstractJpaTestCase {
         return actualDataSet;
     }
 
-    protected static IDataSet getStrippedDataset(IDataSet expectedDataSet)
-            throws Exception {
+    protected static IDataSet getStrippedDataset(IDataSet expectedDataSet) throws Exception {
         String[] tableNames = expectedDataSet.getTableNames();
         IDataSet strippedDataSet = dbunitConnection.createDataSet(tableNames);
         return strippedDataSet;
     }
 
-    public static String toString(IDataSet dataSet) throws DataSetException,
-            IOException {
+    public static String toString(IDataSet dataSet) throws DataSetException, IOException {
         StringWriter writer = new StringWriter();
         try {
             if (dataSet != null) {

@@ -10,14 +10,25 @@
         </layout>
     </appender>
 
-    <!-- Application Loggers -->
+
+
     <logger name="jjseo.test">
         <level value="debug" />
+        <appender-ref ref="console" />
     </logger>
+
+<!-- Application Loggers
+    <logger name="org.hibernate">
+        <level value="debug" />
+        <appender-ref ref="console" />
+    </logger>
+
 
     <logger name="org.dbunit">
         <level value="debug" />
+        <appender-ref ref="console" />
     </logger>
+    -->
 
 
     <!-- Root Logger -->

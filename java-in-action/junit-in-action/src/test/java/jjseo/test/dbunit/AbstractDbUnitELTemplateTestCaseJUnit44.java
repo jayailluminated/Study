@@ -29,6 +29,8 @@ import java.lang.reflect.Method;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 
+import jjseo.test.DataSetsDbUnit;
+
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ReplacementDataSet;
@@ -66,7 +68,7 @@ public abstract class AbstractDbUnitELTemplateTestCaseJUnit44 extends AbstractDb
         }
 
         private void setupDataSet(Method method) {
-            DataSets dataSetAnnotation = method.getAnnotation(DataSets.class);
+            DataSetsDbUnit dataSetAnnotation = method.getAnnotation(DataSetsDbUnit.class);
             if (dataSetAnnotation == null) {
                 return;
             }
@@ -82,7 +84,7 @@ public abstract class AbstractDbUnitELTemplateTestCaseJUnit44 extends AbstractDb
         }
 
         private void assertDataSet(Method method) {
-            DataSets dataSetAnnotation = method.getAnnotation(DataSets.class);
+            DataSetsDbUnit dataSetAnnotation = method.getAnnotation(DataSetsDbUnit.class);
             if (dataSetAnnotation == null) {
                 return;
             }

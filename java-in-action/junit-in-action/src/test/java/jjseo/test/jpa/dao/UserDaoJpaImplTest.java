@@ -1,6 +1,7 @@
 package jjseo.test.jpa.dao;
 
-import jjseo.test.dbunit.DataSets;
+
+import jjseo.test.DataSetsJpa;
 import jjseo.test.jpa.AbstractJpaDbUnitELTemplateTestCaseJUnit44;
 import jjseo.test.jpa.ELFunctionMapperImpl;
 import jjseo.test.jpa.model.User;
@@ -28,17 +29,23 @@ public class UserDaoJpaImplTest extends AbstractJpaDbUnitELTemplateTestCaseJUnit
     }
 
     @Test
-    @DataSets(setUpDataSet = "/user.xml")
+    @DataSetsJpa(setUpDataSet = "/jpa/user.xml")
     public void testGetUserById() throws Exception {
         beginTransaction();
         long id = ELFunctionMapperImpl.getId(User.class);
+
+        log.debug("selected ID is : "+ id);
+
         User user = dao.getUserById(id);
+
+        log.debug("selected USER is : "+ user);
+
         commitTransaction();
         assertUser(user);
     }
 
     @Test
-    @DataSets(setUpDataSet = "/user.xml")
+    @DataSetsJpa(setUpDataSet = "/jpa/user.xml")
     public void testGetUserByIdUnknowId() throws Exception {
         beginTransaction();
         long id = ELFunctionMapperImpl.getId(User.class) * 2;
@@ -48,7 +55,7 @@ public class UserDaoJpaImplTest extends AbstractJpaDbUnitELTemplateTestCaseJUnit
     }
 
     @Test
-    @DataSets(assertDataSet = "/user.xml")
+    @DataSetsJpa(assertDataSet = "/jpa/user.xml")
     public void testAddUser() throws Exception {
         beginTransaction();
         User user = newUser();
@@ -59,7 +66,7 @@ public class UserDaoJpaImplTest extends AbstractJpaDbUnitELTemplateTestCaseJUnit
     }
 
     @Test
-    @DataSets(setUpDataSet = "/user.xml", assertDataSet = "/empty.xml")
+    @DataSetsJpa(setUpDataSet = "/jpa/user.xml", assertDataSet = "/jpa/empty.xml")
     public void testDeleteUser() throws Exception {
         beginTransaction();
         long id = ELFunctionMapperImpl.getId(User.class);
@@ -68,7 +75,7 @@ public class UserDaoJpaImplTest extends AbstractJpaDbUnitELTemplateTestCaseJUnit
     }
 
     @Test
-    @DataSets(setUpDataSet = "/user-with-telephone.xml")
+    @DataSetsJpa(setUpDataSet = "/jpa/user-with-telephone.xml")
     public void testGetUserByIdWithTelephone() throws Exception {
         beginTransaction();
         long id = ELFunctionMapperImpl.getId(User.class);
@@ -79,7 +86,7 @@ public class UserDaoJpaImplTest extends AbstractJpaDbUnitELTemplateTestCaseJUnit
     }
 
     @Test
-    @DataSets(assertDataSet = "/user-with-telephone.xml")
+    @DataSetsJpa(assertDataSet = "/jpa/user-with-telephone.xml")
     public void testAddUserWithTelephone() throws Exception {
         beginTransaction();
         User user = newUserWithTelephone();
@@ -90,7 +97,7 @@ public class UserDaoJpaImplTest extends AbstractJpaDbUnitELTemplateTestCaseJUnit
     }
 
     @Test
-    @DataSets(setUpDataSet = "/user-with-telephone.xml", assertDataSet = "/empty.xml")
+    @DataSetsJpa(setUpDataSet = "/jpa/user-with-telephone.xml", assertDataSet = "/jpa/empty.xml")
     public void testDeleteUserWithTelephone() throws Exception {
         beginTransaction();
         long id = ELFunctionMapperImpl.getId(User.class);
@@ -109,7 +116,7 @@ public class UserDaoJpaImplTest extends AbstractJpaDbUnitELTemplateTestCaseJUnit
     }
 
     @Test
-    @DataSets(setUpDataSet = "/user.xml")
+    @DataSetsJpa(setUpDataSet = "/jpa/user.xml")
     public void testGetUserByIdUnknownId() throws Exception {
         getUserReturnsNullTest(666);
     }
@@ -123,7 +130,7 @@ public class UserDaoJpaImplTest extends AbstractJpaDbUnitELTemplateTestCaseJUnit
     }
 
     @Test
-    @DataSets(setUpDataSet = "/user-with-telephones.xml")
+    @DataSetsJpa(setUpDataSet = "/jpa/user-with-telephones.xml")
     public void testGetUserByIdWithTelephones() throws Exception {
         beginTransaction();
         long id = ELFunctionMapperImpl.getId(User.class);
