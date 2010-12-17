@@ -28,7 +28,6 @@
         <level value="debug" />
     </logger>
 
-
 <!-- Application Loggers
     <logger name="org.hibernate">
         <level value="debug" />
