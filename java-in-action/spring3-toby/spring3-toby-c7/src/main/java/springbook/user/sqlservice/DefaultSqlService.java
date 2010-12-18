@@ -2,10 +2,15 @@ package springbook.user.sqlservice;
 
 import javax.annotation.PostConstruct;
 
-public class BaseSqlService implements SqlService {
+public class DefaultSqlService implements SqlService {
 
 	private SqlReader sqlReader;
 	private SqlRegistry sqlRegistry;
+
+	public DefaultSqlService() {
+		setSqlReader(new JaxbXmlSqlReader());
+		setSqlRegistry(new HashMapSqlRegistry());
+	}
 
 	public void setSqlReader(SqlReader sqlReader) {
 		this.sqlReader = sqlReader;
