@@ -23,6 +23,28 @@
             <groupId>org.jmock</groupId>
             <artifactId>jmock-junit4</artifactId>
         </dependency>
+
+        <!-- database for test -->
+        <!-- necessary only on SchemaTest -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-tools</artifactId>
+            <version>3.2.0.ga</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.7.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.7</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

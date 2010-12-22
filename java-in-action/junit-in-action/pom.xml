@@ -124,23 +124,6 @@
 
 
 
-        <!-- cactus -->
-        <dependency>
-            <groupId>org.apache.cactus</groupId>
-            <artifactId>cactus.core.framework.uberjar.javaEE.14</artifactId>
-            <version>1.8.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cactus</groupId>
-            <artifactId>cactus.integration.ant</artifactId>
-            <version>1.8.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cactus</groupId>
-            <artifactId>cactus.integration.shared.api</artifactId>
-            <version>1.8.1</version>
-        </dependency>
-
         <!-- dbunit -->
         <dependency>
             <groupId>org.dbunit</groupId>
@@ -149,42 +132,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- database for test -->
-        <!-- necessary only on SchemaTest -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-tools</artifactId>
-            <version>3.2.0.ga</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.ant</groupId>
-            <artifactId>ant</artifactId>
-            <version>1.7.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>1.8.0.7</version>
-            <scope>test</scope>
-        </dependency>
-
-
-
-        <!-- cargo -->
-        <dependency>
-            <groupId>org.codehaus.cargo</groupId>
-            <artifactId>cargo-core-uberjar</artifactId>
-            <version>1.0-alpha-4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.cargo</groupId>
-            <artifactId>cargo-ant</artifactId>
-            <version>1.0-alpha-4</version>
-            <scope>provided</scope>
-        </dependency>
 
 
         <!-- el api -->
@@ -273,6 +220,7 @@
         <module>junit-in-action-presentation</module>
         <module>junit-in-action-common</module>
         <module>junit-in-action-selenium</module>
+        <module>junit-in-action-cactus</module>
     </modules>
 
     <repositories>
