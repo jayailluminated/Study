@@ -39,6 +39,8 @@
         	<version>1.6.9</version>
         </dependency>
 
+
+
 		<!-- test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -87,6 +89,7 @@
         	<version>1.8.5</version>
         </dependency>
 
+
 	</dependencies>
 
 
@@ -106,7 +109,22 @@
 	<modules>
 		<module>spring3-toby-c6</module>
 		<module>spring3-toby-c7</module>
+		<module>spring3-toby-c10</module>
 	</modules>
+
+	<repositories>
+		<!-- spring sourceの OSGi bundle repository -->
+		<repository>
+			<id>com.springsource.repository.bundles.release</id>
+			<name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Release</name>
+			<url>http://repository.springsource.com/maven/bundles/release</url>
+		</repository>
+		<repository>
+			<id>com.springsource.repository.bundles.external</id>
+			<name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Release</name>
+			<url>http://repository.springsource.com/maven/bundles/external</url>
+		</repository>
+	</repositories>
 
 
 </project>
