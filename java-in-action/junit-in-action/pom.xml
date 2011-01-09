@@ -9,15 +9,44 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>junit-in-action</artifactId>
     <name>junit-in-action</name>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.8.1</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- htmlunit -->
+            <dependency>
+                <groupId>net.sourceforge.htmlunit</groupId>
+                <artifactId>htmlunit</artifactId>
+                <version>2.5</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- jmock -->
+            <dependency>
+                <groupId>org.jmock</groupId>
+                <artifactId>jmock-legacy</artifactId>
+                <version>2.5.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jmock</groupId>
+                <artifactId>jmock-junit4</artifactId>
+                <version>2.5.1</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.1</version>
-            <scope>test</scope>
-        </dependency>
 
         <!-- loggin -->
         <dependency>
@@ -42,6 +71,7 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>1.8.5</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- easymock -->
@@ -58,17 +88,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- jmock -->
-        <dependency>
-            <groupId>org.jmock</groupId>
-            <artifactId>jmock-legacy</artifactId>
-            <version>2.5.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jmock</groupId>
-            <artifactId>jmock-junit4</artifactId>
-            <version>2.5.1</version>
-        </dependency>
 
         <!-- servlet -->
         <dependency>
@@ -103,81 +122,40 @@
             <version>1.1.1</version>
         </dependency>
 
-        <!-- htmlunit -->
-        <dependency>
-            <groupId>net.sourceforge.htmlunit</groupId>
-            <artifactId>htmlunit</artifactId>
-            <version>2.8</version>
-            <scope>test</scope>
-        </dependency>
 
-        <!-- cactus -->
-        <dependency>
-            <groupId>org.apache.cactus</groupId>
-            <artifactId>cactus.core.framework.uberjar.javaEE.14</artifactId>
-            <version>1.8.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cactus</groupId>
-            <artifactId>cactus.integration.ant</artifactId>
-            <version>1.8.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cactus</groupId>
-            <artifactId>cactus.integration.shared.api</artifactId>
-            <version>1.8.1</version>
-        </dependency>
 
         <!-- dbunit -->
         <dependency>
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>
             <version>2.4.8</version>
-        </dependency>
-
-        <!-- database for test -->
-        <!-- necessary only on SchemaTest -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-tools</artifactId>
-            <version>3.2.0.ga</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.ant</groupId>
-            <artifactId>ant</artifactId>
-            <version>1.7.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>1.8.0.7</version>
             <scope>test</scope>
         </dependency>
 
-
-
-        <!-- cargo -->
-        <dependency>
-            <groupId>org.codehaus.cargo</groupId>
-            <artifactId>cargo-core-uberjar</artifactId>
-            <version>1.0-alpha-4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.cargo</groupId>
-            <artifactId>cargo-ant</artifactId>
-            <version>1.0-alpha-4</version>
-            <scope>provided</scope>
-        </dependency>
 
 
         <!-- el api -->
         <dependency>
+            <!-- EL specification -->
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <!-- EL implementation -->
             <groupId>org.apache.tomcat</groupId>
             <artifactId>jasper-el</artifactId>
-            <version>6.0.29</version>
+            <version>6.0.18</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <!-- Apache's EL does not have the ExpressionFactory.newInstance() method -->
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>el-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -214,168 +192,53 @@
             <version>1.0.1B-rc4</version>
             <scope>provided</scope>
         </dependency>
+
+
+        <!-- commons -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.5</version>
+        </dependency>
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/resources</directory>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**</include>
-                </includes>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <filtering>false</filtering>
-                <directory>src/test/resources</directory>
-            </testResource>
-            <testResource>
-                <filtering>false</filtering>
-                <directory>src/test/java</directory>
-                <includes>
-                    <include>**</include>
-                </includes>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </testResource>
-        </testResources>
-
         <plugins>
             <plugin>
-                <groupId>org.apache.cactus</groupId>
-                <artifactId>cactus.integration.maven2</artifactId>
-                <version>1.8.1</version>
-                <configuration>
-                    <srcFile>${project.build.directory}/${project.artifactId}-${project.version}.war</srcFile>
-                    <destFile>${project.build.directory}/${project.artifactId}-cactified.war</destFile>
-                    <testClasses>
-                        <directory>target/test-classes</directory>
-                        <includes>
-                            <include>**/**Test*.class</include>
-                        </includes>
-                    </testClasses>
-                    <libDependencies>
-                        <dependency>
-                            <groupId>net.sourceforge.htmlunit</groupId>
-                            <artifactId>htmlunit</artifactId>
-                        </dependency>
-                    </libDependencies>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>cactus-cactifywar</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>cactifywar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
-                <version>1.0-beta-2</version>
-                <executions>
-                    <execution>
-                        <id>start-container</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>start</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>stop-container</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <wait>false</wait>
-                    <timeout>20000</timeout>
-                    <container>
-                        <containerId>tomcat5x</containerId>
-                        <log>target/cargo.log</log>
-                        <output>target/output.log</output>
-                        <!-- If you don't want cargo to download the container, just comment
-                            the bottom lines and specify a [home] parameter -->
-                        <zipUrlInstaller>
-                            <url>http://apache.speedbone.de/tomcat/tomcat-5/v5.5.27/bin/apache-tomcat-5.5.27.zip</url>
-                            <installDir>${basedir}/install</installDir>
-                        </zipUrlInstaller>
-                    </container>
-                    <configuration>
-                        <deployables>
-                            <deployable>
-                                <location>${project.build.directory}/${pom.artifactId}-cactified.war</location>
-                                <type>war</type>
-                                <properties>
-                                    <context>/test</context>
-                                </properties>
-                                <pingURL>http://localhost:8080/</pingURL>
-                            </deployable>
-                        </deployables>
-                    </configuration>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
+                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <skip>true</skip>
+                    <!-- http://maven.apache.org/plugins/maven-compiler-plugin/ -->
+                    <source>1.6</source>
+                    <target>1.6</target>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>surefire-it</id>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <skip>false</skip>
-                            <systemProperties>
-                                <property>
-                                    <name>cactus.contextURL</name>
-                                    <value>http://localhost:8085/test/</value>
-                                </property>
-                            </systemProperties>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <useCache>false</useCache>
-                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
-                    <warSourceIncludes>
-                        *, test/*, WEB-INF/classes/**
-                    </warSourceIncludes>
-                    <packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>create-cactus-war-archive</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>war</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
 
+    <modules>
+        <module>junit-in-action-presentation</module>
+        <module>junit-in-action-common</module>
+        <module>junit-in-action-selenium</module>
+        <module>junit-in-action-cactus</module>
+    </modules>
+
+    <repositories>
+        <repository>
+            <id>openqa</id>
+            <name>OpenQA Repository</name>
+            <url>http://nexus.openqa.org/content/repositories/releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
 </project>
