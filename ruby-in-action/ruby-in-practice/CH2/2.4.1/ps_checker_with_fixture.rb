@@ -1,4 +1,4 @@
-require 'process_checker'
+require_relative 'process_checker'
 require 'test/unit'
 
 class TestProcessChecker < Test::Unit::TestCase
@@ -15,11 +15,11 @@ PS
 
     @my_checker.instance_variable_set('@ps_output', output)
   end
-    
+
   def test_initialized
     assert @my_checker.instance_variables.include?('@ps_output')
   end
-  
+
   def test_rails_server
     assert @my_checker.rails_server?
   end

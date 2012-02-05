@@ -8,7 +8,7 @@ class MaterialSupplier
       product_id = SupplierInterface.search(purchase[:item_name])
       SupplierInterface.add_to_cart(product_id, purchase[:quantity])
     end
-    
+
     SupplierInterface.purchase
   end
 

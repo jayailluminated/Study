@@ -30,3 +30,14 @@ run periodically using cron:
 
   echo "0 * * * * $(pwd)/twitter_image.rb \"Check out this photo \"" > jobs
   crontab jobs
+
+
+WARMING YAMLはkey:[_]<< スペースを入れる必要がある。
+password
+~/.twitter
+email: <emails>
+password: <password>
+
+~/.amazonws
+key_id: <keyid>
+key_secret: <secrt>

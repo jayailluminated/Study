@@ -1,4 +1,4 @@
-require 'process_checker'
+require_relative 'process_checker'
 require 'test/unit'
 
 class TestProcessChecker < Test::Unit::TestCase
